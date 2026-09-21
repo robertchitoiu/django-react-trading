@@ -1,0 +1,26 @@
+# ========================  
+# Backend  
+# ========================  
+backend/venv/  
+backend/config/db.sqlite3  
+backend/__pycache__/  
+backend/**/__pycache__/  
+backend/*.pyc  
+backend/*.pyo  
+backend/.env
+
+# ========================  
+# Frontend  
+# ========================  
+frontend/node_modules/  
+frontend/.env  
+frontend/.env.local  
+frontend/dist/  
+frontend/build/
+
+# ========================  
+# General  
+# ========================  
+.vscode/  
+.DS_Store  
+*.DS_Store  
