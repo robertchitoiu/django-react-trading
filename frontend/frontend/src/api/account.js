@@ -1,0 +1,37 @@
+import api from './axios'
+
+export async function getAccounts() {
+    try {
+        const response = await api.get('api/accounts/')
+        return response.data
+    } catch(err) {
+        return { error: err}
+    }
+}
+
+export async function createAccount(currency) {
+    try {
+        const response = await api.post('api/accounts/', { currency })
+        return true
+    } catch(err) {
+        return { error: err}
+    }
+}
+
+export async function updateAccount(id, currency) {
+    try {
+        const response = await api.patch(`api/accounts/${id}/`, { currency })
+        return true
+    } catch(err) {
+        return { error: err}
+    }
+}
+
+export async function deleteAccount(id) {
+    try {
+        const response = await api.delete(`api/accounts/${id}/`)
+        return true
+    } catch(err) {
+        return { error: err}
+    }
+}
