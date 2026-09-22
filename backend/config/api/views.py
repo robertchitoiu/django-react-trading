@@ -69,3 +69,8 @@ def transactions(request, id):
             serializer.save(account=account)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])  
+def user_details(request):  
+    serializer = UserSerializer(request.user)  
+    return Response(serializer.data, status=status.HTTP_200_OK)  
