@@ -6,6 +6,9 @@ import Home from './pages/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from './constants'
 import { Navigate } from 'react-router-dom'
+import Accounts from './pages/Accounts'
+import Transactions from './pages/Transactions'
+import MyAccount from './pages/MyAccount'
 
 function Logout() {
   localStorage.removeItem(ACCESS_TOKEN)
@@ -22,11 +25,13 @@ function App() {
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
-        }>
-        </Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/logout' element={<Logout />}></Route>
+        } />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/logout' element={<Logout />} />
+        <Route path='/accounts' element={<Accounts />} />
+        <Route path='/transactions' element={<Transactions />} />
+        <Route path='/myaccount' element={<MyAccount />} />
       </Routes>
     </BrowserRouter>
     </>

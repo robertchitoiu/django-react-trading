@@ -4,11 +4,6 @@
     padding: 0;  
 }
 
-body {  
-    font-family: 'Inter', sans-serif;  
-    background-color: #0a0f1e;  
-}
-
 .form-container {  
     display: flex;  
     flex-direction: row;  
