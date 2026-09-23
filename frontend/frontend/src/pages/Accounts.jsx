@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar"
 import { getAccounts, updateAccount, createAccount, deleteAccount } from "../api/account"  
 import { useEffect, useState } from "react"  
 import '../styles/Accounts.css'
+import { Link } from "react-router-dom"
 
 function Accounts() {  
     const [accounts, setAccounts] = useState([])
@@ -33,8 +34,10 @@ function Accounts() {
                     </span>  
                 </td>  
                 <td>  
-                    <div className="account-actions">  
-                        <button className="btn-edit" disabled={!account.is_active}>Edit</button>  
+                    <div className="account-actions">
+                        <Link to={`/editAccount/${account.id}`}>
+                            <button className="btn-edit" disabled={!account.is_active}>Edit</button>
+                        </Link>  
                         <button className="btn-delete" disabled={!account.is_active}>Delete</button>  
                     </div>  
                 </td>  
@@ -46,7 +49,6 @@ function Accounts() {
         <>  
             <Navbar />  
             <div className="accounts-page">
-
                 <div className="header-container">  
                     <div>  
                         <h1 className="header-title">Accounts</h1>  
@@ -54,7 +56,6 @@ function Accounts() {
                     </div>  
                     <button className="btn-new-account">+ New Account</button>  
                 </div>
-
                 {accounts.length === 0 ? (  
                     <div className="empty-state">  
                         <p>You don't have any accounts yet.</p>  
@@ -77,7 +78,6 @@ function Accounts() {
                         </tbody>  
                     </table>  
                 )}
-
             </div>  
         </>  
     )  

@@ -9,6 +9,7 @@ import { Navigate } from 'react-router-dom'
 import Accounts from './pages/Accounts'
 import Transactions from './pages/Transactions'
 import MyAccount from './pages/MyAccount'
+import EditAccount from './pages/EditAccount'
 
 function Logout() {
   localStorage.removeItem(ACCESS_TOKEN)
@@ -21,17 +22,38 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/' element={
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
-        } />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/logout' element={<Logout />} />
-        <Route path='/accounts' element={<Accounts />} />
-        <Route path='/transactions' element={<Transactions />} />
-        <Route path='/myaccount' element={<MyAccount />} />
+        }/>
+        <Route path='/logout' element={
+        <ProtectedRoute>
+          <Logout />
+        </ProtectedRoute>
+        }/>
+        <Route path='/accounts' element={
+          <ProtectedRoute>
+            <Accounts />
+          </ProtectedRoute>
+        }/>
+        <Route path='/editAccount/:id' element={  
+          <ProtectedRoute>  
+              <EditAccount />  
+          </ProtectedRoute>  
+        }/>  
+        <Route path='/transactions' element={
+          <ProtectedRoute>
+              <Transactions />
+          </ProtectedRoute>
+        }/>
+        <Route path='/myaccount' element={
+          <ProtectedRoute>
+            <MyAccount />
+          </ProtectedRoute>
+        }/>
       </Routes>
     </BrowserRouter>
     </>

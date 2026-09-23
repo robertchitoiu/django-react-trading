@@ -28,7 +28,7 @@ def accounts(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PATCH', 'DELETE'])
+@api_view(['GET', 'PATCH', 'DELETE'])
 def accounts_detail(request, id):
     try:
         account = Account.objects.get(id=id)
@@ -41,7 +41,10 @@ def accounts_detail(request, id):
     if not account.is_active:
         return Response(status=status.HTTP_403_FORBIDDEN)
 
-    if request.method == 'DELETE':
+    if request.method == 'GET':
+        serializer = AccountSerializer(account)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'DELETE':
         account.is_active = False
         account.save()
         return Response(status=status.HTTP_200_OK)
