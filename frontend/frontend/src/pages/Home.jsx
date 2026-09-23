@@ -9,7 +9,10 @@ function Home() {
 
     useEffect(() => {  
         getUser()  
-            .then(data => setUsername(data.username))  
+            .then(data => {
+                const capitalizedUsername = data.username.charAt(0).toUpperCase() + data.username.slice(1)
+                setUsername(capitalizedUsername)
+            })
             .catch(err => console.log(err))  
     }, [])
 
@@ -18,7 +21,7 @@ function Home() {
             <Navbar />  
             <div className="hero-section">  
                 <div className="hero-content">  
-                    <p className="hero-greeting">Welcome back, <span>{username}</span> 👋</p>  
+                    <p className="hero-greeting">Welcome back, <span>{username}</span></p>  
                     <h1 className="hero-title">Your Trading Dashboard</h1>  
                     <p className="hero-subtitle">  
                         Manage your accounts, track your transactions and simulate trading in real time.  
@@ -28,7 +31,6 @@ function Home() {
                         <Link to="/transactions" className="hero-btn-secondary">View Transactions</Link>  
                     </div>  
                 </div>
-
                 <div className="hero-cards">  
                     <div className="hero-card">  
                         <p className="card-label">Total Accounts</p>  
