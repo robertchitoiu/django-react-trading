@@ -11,8 +11,8 @@ export async function getAccounts() {
 
 export async function createAccount(currency) {
     try {
-        const response = await api.post('api/accounts/', { currency })
-        return true
+        await api.post('api/accounts/', { currency })
+        return
     } catch(err) {
         throw(err)
     }
@@ -20,8 +20,8 @@ export async function createAccount(currency) {
 
 export async function updateAccount(id, name, currency) {
     try {
-        const response = await api.patch(`api/accounts/${id}/`, { currency, name })
-        return true
+        await api.patch(`api/accounts/${id}/`, { currency, name })
+        return
     } catch(err) {
         throw(err)
     }
@@ -29,8 +29,8 @@ export async function updateAccount(id, name, currency) {
 
 export async function deleteAccount(id) {
     try {
-        const response = await api.delete(`api/accounts/${id}/`)
-        return true
+        await api.delete(`api/accounts/${id}/`)
+        return
     } catch(err) {
         throw(err)
     }

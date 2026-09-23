@@ -3,7 +3,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants'
 
 export async function register(username, email, password, confirm_password) {
     try {
-        const response = await api.post('api/auth/register/', {username, email, password, confirm_password})
+        await api.post('api/auth/register/', {username, email, password, confirm_password})
         return
     } catch(err) {
         throw(err)

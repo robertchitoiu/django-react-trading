@@ -13,6 +13,15 @@ function Accounts() {
             .catch(err => console.log(err))  
     }, [])
 
+    function handleDelete(id) {
+        const confirmed = window.confirm('Are you sure you want to delete this account?')  
+        if (!confirmed) return
+        deleteAccount(id).catch(err => console.log(err))
+        setAccounts(prevAcounts => prevAcounts.map(account => {
+            return account.id === id ? {...account, is_active: false} : account
+        }))
+    }
+
     const accountsItems = accounts.map(account => {  
         return (  
             <tr key={account.id}>  
@@ -37,8 +46,8 @@ function Accounts() {
                     <div className="account-actions">
                         <Link to={`/editAccount/${account.id}`}>
                             <button className="btn-edit" disabled={!account.is_active}>Edit</button>
-                        </Link>  
-                        <button className="btn-delete" disabled={!account.is_active}>Delete</button>  
+                        </Link> 
+                        <button onClick={() => handleDelete(account.id)} className="btn-delete" disabled={!account.is_active}>Delete</button>  
                     </div>  
                 </td>  
             </tr>  

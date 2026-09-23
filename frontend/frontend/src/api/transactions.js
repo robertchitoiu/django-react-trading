@@ -11,8 +11,8 @@ export async function getTransactions(id) {
 
 export async function createTransaction(accId, amount, type) {
     try {
-        const response = await api.post(`accounts/${accId}/transactions/`, {amount, type})
-        return true    
+        await api.post(`accounts/${accId}/transactions/`, {amount, type})
+        return    
     } catch(err) {
         throw(err)
     }
