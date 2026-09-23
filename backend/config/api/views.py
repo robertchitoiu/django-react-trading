@@ -38,6 +38,9 @@ def accounts_detail(request, id):
     if account.user != request.user:
         return Response(status=status.HTTP_403_FORBIDDEN)
 
+    if not account.is_active:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+
     if request.method == 'DELETE':
         account.is_active = False
         account.save()
