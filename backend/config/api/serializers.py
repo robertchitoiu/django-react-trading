@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['id', 'balance', 'currency', 'created_at', 'user']
+        fields = ['id', 'balance', 'currency', 'created_at', 'user', 'name', 'is_active']
         extra_kwargs = {'created_at': {'read_only': True}, 'user': {'read_only': True}, 'balance': {'read_only': True}}
 
 class TransactionSerializer(serializers.ModelSerializer):

@@ -1,0 +1,179 @@
+.accounts-page {  
+    background-color: #0a0f1e;  
+    min-height: calc(100vh - 64px);  
+    padding: 40px 48px;  
+}
+
+.header-container {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+    margin-bottom: 32px;  
+}
+
+.header-title {  
+    color: #ffffff;  
+    font-size: 28px;  
+    font-weight: 700;  
+    letter-spacing: -0.5px;  
+}
+
+.header-subtitle {  
+    color: #8892a4;  
+    font-size: 14px;  
+    margin-top: 4px;  
+}
+
+.btn-new-account {  
+    background-color: #3676f6;  
+    color: white;  
+    border: none;  
+    padding: 10px 20px;  
+    border-radius: 8px;  
+    font-size: 14px;  
+    font-weight: 600;  
+    cursor: pointer;  
+    transition: background-color 0.2s, transform 0.1s;  
+    font-family: 'Inter', sans-serif;  
+}
+
+.btn-new-account:hover {  
+    background-color: #1e5fe0;  
+}
+
+.btn-new-account:active {  
+    transform: scale(0.98);  
+}
+
+.table-container {  
+    width: 100%;  
+    border-collapse: collapse;  
+    background-color: #111d35;  
+    border-radius: 12px;  
+    overflow: hidden;  
+    border: 1px solid #1e2d4a;  
+}
+
+.table-container thead tr {  
+    background-color: #0d1526;  
+    border-bottom: 1px solid #1e2d4a;  
+}
+
+.table-container th {  
+    color: #8892a4;  
+    font-size: 12px;  
+    font-weight: 600;  
+    text-transform: uppercase;  
+    letter-spacing: 0.5px;  
+    padding: 14px 20px;  
+    text-align: left;  
+}
+
+.table-container td {  
+    color: #ffffff;  
+    font-size: 14px;  
+    padding: 16px 20px;  
+    border-bottom: 1px solid #1e2d4a;  
+}
+
+.table-container tbody tr:last-child td {  
+    border-bottom: none;  
+}
+
+.table-container tbody tr:hover {  
+    background-color: #142040;  
+}
+
+.account-name {  
+    font-weight: 500;  
+}
+
+.account-balance {  
+    font-weight: 600;  
+    color: #00c087;  
+}
+
+.account-currency {  
+    color: #8892a4;  
+    font-size: 12px;  
+    font-weight: 400;  
+}
+
+.account-status {  
+    padding: 4px 10px;  
+    border-radius: 20px;  
+    font-size: 12px;  
+    font-weight: 600;  
+}
+
+.status-active {  
+    background-color: rgba(0, 192, 135, 0.1);  
+    color: #00c087;  
+    border: 1px solid rgba(0, 192, 135, 0.2);  
+}
+
+.status-inactive {  
+    background-color: rgba(255, 71, 87, 0.1);  
+    color: #ff4757;  
+    border: 1px solid rgba(255, 71, 87, 0.2);  
+}
+
+.account-actions {  
+    display: flex;  
+    gap: 8px;  
+}
+
+.btn-edit {  
+    background-color: transparent;  
+    color: #8892a4;  
+    border: 1px solid #1e2d4a;  
+    padding: 6px 14px;  
+    border-radius: 6px;  
+    font-size: 13px;  
+    font-weight: 500;  
+    cursor: pointer;  
+    transition: all 0.2s;  
+    font-family: 'Inter', sans-serif;  
+}
+
+.btn-edit:hover {  
+    color: #ffffff;  
+    border-color: #3676f6;  
+}
+
+.btn-delete {  
+    background-color: transparent;  
+    color: #8892a4;  
+    border: 1px solid #1e2d4a;  
+    padding: 6px 14px;  
+    border-radius: 6px;  
+    font-size: 13px;  
+    font-weight: 500;  
+    cursor: pointer;  
+    transition: all 0.2s;  
+    font-family: 'Inter', sans-serif;  
+}
+
+.btn-delete:hover {  
+    color: #ff4757;  
+    border-color: #ff4757;  
+    background-color: rgba(255, 71, 87, 0.05);  
+}
+
+.empty-state {  
+    display: flex;  
+    flex-direction: column;  
+    align-items: center;  
+    justify-content: center;  
+    gap: 16px;  
+    padding: 80px 0;  
+    color: #8892a4;  
+    font-size: 15px;  
+}  
+
+.btn-edit:disabled,  
+.btn-delete:disabled {  
+    opacity: 0.3;  
+    cursor: not-allowed;  
+}  
+
