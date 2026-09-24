@@ -66,15 +66,19 @@ function Accounts() {
                         <h1 className="header-title">Accounts</h1>  
                         <p className="header-subtitle">Here you can manage all your accounts.</p>  
                     </div>
-                    <Link to='/createAccount'>
-                        <button className="btn-new-account">+ New Account</button> 
-                    </Link>  
+                    {accounts.length !== 0 && 
+                        <Link to='/createAccount'>
+                            <button className="btn-new-account">New Account</button> 
+                        </Link> 
+                    } 
                 </div>
-                {accounts.length === 0 ? (  
-                    <div className="empty-state">  
-                        <p>You don't have any accounts yet.</p>  
-                        <button className="btn-new-account">Create your first account</button>  
-                    </div>  
+                {accounts.length === 0 ? (
+                    <div className="empty-state">
+                        <Link to='/createAccount'>    
+                            <button className="btn-new-account">Create your first account</button>  
+                        </Link>
+                        <p>You don't have any accounts yet.</p> 
+                    </div> 
                 ) : (  
                     <table className="table-container">  
                         <thead>  

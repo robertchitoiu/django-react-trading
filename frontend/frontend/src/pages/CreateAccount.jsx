@@ -58,7 +58,7 @@ function CreateAccount() {
                         </select>  
                     </div>   
                     <div className="create-actions">  
-                        <button type="submit" className="btn-save">Save Changes</button>  
+                        <button type="submit" className="btn-save">Create</button>  
                         <Link to="/accounts" className="btn-cancel">Cancel</Link>  
                     </div>  
                 </form>  

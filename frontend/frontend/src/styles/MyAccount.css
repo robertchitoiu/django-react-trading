@@ -1,0 +1,105 @@
+.my-account-page {  
+    background-color: #0a0f1e;  
+    height: calc(100vh - 64px);  
+    overflow: hidden; 
+    display: flex;  
+    flex-direction: row;
+    gap: 10rem; 
+}
+
+.my-account-page > img {  
+    width: 50%;  
+    height: 100%; 
+    object-fit: cover;  
+    object-position: center;  
+    display: block;  
+}
+
+.my-account-content {  
+    width: 50%;  
+    height: 100%;  
+    padding: 40px 48px;  
+    display: flex;  
+    flex-direction: column;  
+    justify-content: center;  
+    overflow-y: auto;    
+}  
+
+
+.my-account-page .header-container {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+    margin-bottom: 32px;  
+}
+
+.my-account-page .header-title {  
+    color: #ffffff;  
+    font-size: 28px;  
+    font-weight: 700;  
+    letter-spacing: -0.5px;  
+}
+
+.my-account-page .header-subtitle {  
+    color: #8892a4;  
+    font-size: 14px;  
+    margin-top: 4px;  
+}
+
+.my-account-page .profile-card {  
+    background-color: #111d35;  
+    border: 1px solid #1e2d4a;  
+    border-radius: 12px;  
+    padding: 32px;  
+    display: flex;  
+    gap: 32px;  
+    align-items: flex-start;  
+}
+
+.my-account-page .profile-avatar {  
+    width: 72px;  
+    height: 72px;  
+    border-radius: 50%;  
+    background-color: #3676f6;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    font-size: 28px;  
+    font-weight: 700;  
+    color: white;  
+    flex-shrink: 0;  
+}
+
+.my-account-page .profile-info {  
+    display: flex;  
+    flex-direction: column;  
+    gap: 20px;  
+    width: 100%;  
+}
+
+.my-account-page .profile-field {  
+    display: flex;  
+    flex-direction: column;  
+    gap: 4px;  
+    padding-bottom: 20px;  
+    border-bottom: 1px solid #1e2d4a;  
+}
+
+.my-account-page .profile-field:last-child {  
+    border-bottom: none;  
+    padding-bottom: 0;  
+}
+
+.my-account-page .field-label {  
+    color: #8892a4;  
+    font-size: 12px;  
+    font-weight: 600;  
+    text-transform: uppercase;  
+    letter-spacing: 0.5px;  
+}
+
+.my-account-page .field-value {  
+    color: #ffffff;  
+    font-size: 15px;  
+    font-weight: 500;  
+}
