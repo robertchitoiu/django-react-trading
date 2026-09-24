@@ -1,42 +1,35 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { getAccountDetails, updateAccount } from "../api/account"
-import '../styles/EditAccount.css'
+import { Link, useNavigate } from "react-router-dom"
+import { createAccount } from "../api/account"
+import '../styles/CreateAccount.css'
 import Navbar from "../components/Navbar"
 
-function EditAccount() {
-    const { id } = useParams()
+function CreateAccount() {
     const [name, setName] = useState('')
     const [currency, setCurrency] = useState('')
     const navigate = useNavigate()
 
-    useEffect(() => {
-        getAccountDetails(id)
-            .then(data => {setName(data.name); setCurrency(data.currency);})
-                .catch(err => console.log(err))
-    }, [])
-
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            await updateAccount(id, name, currency)
+            await createAccount(name, currency)
             navigate('/accounts')
         }catch(err) {
             console.log(err)
-        }        
+        }
     }
 
-    return (  
+    return(
         <>  
             <Navbar />  
-            <div className="edit-account-page">  
+            <div className="create-account-page">  
                 <div className="header-container">  
                     <div>  
-                        <h1 className="header-title">Edit your Account</h1>  
-                        <p className="header-subtitle">Here you can edit your account's details.</p>  
+                        <h1 className="header-title">Create Account</h1>  
+                        <p className="header-subtitle">Here you can create a new account.</p>  
                     </div>  
                 </div>
-                <form className="edit-form" onSubmit={handleSubmit}>  
+                <form className="create-form" onSubmit={handleSubmit}>  
                     <div className="form-item">  
                         <label>Account Name</label>  
                         <input 
@@ -60,14 +53,14 @@ function EditAccount() {
                             <option value="USD">USD</option> 
                         </select>  
                     </div>   
-                    <div className="edit-actions">  
+                    <div className="create-actions">  
                         <button type="submit" className="btn-save">Save Changes</button>  
                         <Link to="/accounts" className="btn-cancel">Cancel</Link>  
                     </div>  
                 </form>  
             </div>  
-        </>  
-    )  
+        </>
+    )
 }
 
-export default EditAccount
+export default CreateAccount

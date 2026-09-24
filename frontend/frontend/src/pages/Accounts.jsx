@@ -62,8 +62,10 @@ function Accounts() {
                     <div>  
                         <h1 className="header-title">Accounts</h1>  
                         <p className="header-subtitle">Here you can manage all your accounts.</p>  
-                    </div>  
-                    <button className="btn-new-account">+ New Account</button>  
+                    </div>
+                    <Link to='/createAccount'>
+                        <button className="btn-new-account">+ New Account</button> 
+                    </Link>  
                 </div>
                 {accounts.length === 0 ? (  
                     <div className="empty-state">  

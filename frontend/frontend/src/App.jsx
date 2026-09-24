@@ -10,6 +10,7 @@ import Accounts from './pages/Accounts'
 import Transactions from './pages/Transactions'
 import MyAccount from './pages/MyAccount'
 import EditAccount from './pages/EditAccount'
+import CreateAccount from './pages/CreateAccount'
 
 function Logout() {
   localStorage.removeItem(ACCESS_TOKEN)
@@ -44,6 +45,11 @@ function App() {
               <EditAccount />  
           </ProtectedRoute>  
         }/>  
+        <Route path='/createAccount' element={
+          <ProtectedRoute>
+            <CreateAccount />
+          </ProtectedRoute>
+        }/>
         <Route path='/transactions' element={
           <ProtectedRoute>
               <Transactions />

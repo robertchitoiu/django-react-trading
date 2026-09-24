@@ -9,9 +9,9 @@ export async function getAccounts() {
     }
 }
 
-export async function createAccount(currency) {
+export async function createAccount(name, currency) {
     try {
-        await api.post('api/accounts/', { currency })
+        await api.post('api/accounts/', { name, currency })
         return
     } catch(err) {
         throw(err)
