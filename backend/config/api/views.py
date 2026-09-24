@@ -72,7 +72,16 @@ def transactions(request, id):
     elif request.method == 'POST':
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
+            amount = serializer.validated_data.get('amount')
+            transaction_type = serializer.validated_data.get('type') 
+            if transaction_type == 'buy':
+                if account.balance < amount:  
+                    return Response({'error': 'Insufficient balance'}, status=status.HTTP_400_BAD_REQUEST)
+                account.balance = account.balance - amount
+            else:
+                account.balance = account.balance + amount 
             serializer.save(account=account)
+            account.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
