@@ -5,6 +5,8 @@ from .models import Account, Transaction
 from .serializers import TransactionSerializer, AccountSerializer, UserSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
+import requests
+import os
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -88,4 +90,14 @@ def transactions(request, id):
 @api_view(['GET'])  
 def user_details(request):  
     serializer = UserSerializer(request.user)  
-    return Response(serializer.data, status=status.HTTP_200_OK)  
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_news(request):
+    api_key = os.environ.get('FINNHUB_API_KEY')
+    url = f'https://finnhub.io/api/v1/news?category=general&token={api_key}'
+    try:
+        response = requests.get(url)
+        return Response(response.json(), status=status.HTTP_200_OK)
+    except:
+        return Response({'error': 'There was a problem with the api'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
