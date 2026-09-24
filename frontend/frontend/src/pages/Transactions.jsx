@@ -16,8 +16,12 @@ function Transactions() {
 
     const transactionItems = transactions.map(transaction => {
         return(
-             <tr key={transaction.id}>  
-                <td style={{color: transaction.type === 'buy' ? '#36f63d' : '#ff4757'}}>{transaction.type}</td>  
+             <tr key={transaction.id}>
+                <td>
+                    <span className={`transaction-type ${transaction.type === 'buy' ? 'type-buy' : 'type-sell'}`}>  
+                            {transaction.type}  
+                    </span>
+                </td>
                 <td>{transaction.amount}</td>  
                 <td>{new Date(transaction.date).toLocaleDateString()}</td> 
             </tr>  
