@@ -1,0 +1,90 @@
+.transactions-page {  
+    background-color: #0a0f1e;  
+    min-height: calc(100vh - 64px);  
+    padding: 40px 48px;  
+}
+
+.transactions-page .header-container {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+    margin-bottom: 32px;  
+}
+
+.transactions-page .header-title {  
+    color: #ffffff;  
+    font-size: 28px;  
+    font-weight: 700;  
+    letter-spacing: -0.5px;  
+}
+
+.transactions-page .header-subtitle {  
+    color: #8892a4;  
+    font-size: 14px;  
+    margin-top: 4px;  
+}
+
+.transactions-page .table-container {  
+    width: 100%;  
+    border-collapse: collapse;  
+    background-color: #111d35;  
+    border-radius: 12px;  
+    overflow: hidden;  
+    border: 1px solid #1e2d4a;  
+}
+
+.transactions-page .table-container thead tr {  
+    background-color: #0d1526;  
+    border-bottom: 1px solid #1e2d4a;  
+}
+
+.transactions-page .table-container th {  
+    color: #8892a4;  
+    font-size: 12px;  
+    font-weight: 600;  
+    text-transform: uppercase;  
+    letter-spacing: 0.5px;  
+    padding: 14px 20px;  
+    text-align: left;  
+}
+
+.transactions-page .table-container td {  
+    color: #ffffff;  
+    font-size: 14px;  
+    padding: 16px 20px;  
+    border-bottom: 1px solid #1e2d4a;  
+}
+
+.transactions-page .table-container tbody tr:last-child td {  
+    border-bottom: none;  
+}
+
+.transactions-page .table-container tbody tr:hover {  
+    background-color: #142040;  
+}
+
+.transactions-page .account-name {  
+    font-weight: 500;  
+}
+
+.transactions-page .account-balance {  
+    font-weight: 600;  
+    color: #00c087;  
+}
+
+.transactions-page .account-currency {  
+    color: #8892a4;  
+    font-size: 12px;  
+    font-weight: 400;  
+}
+
+.transactions-page .empty-state {  
+    display: flex;  
+    flex-direction: column;  
+    align-items: center;  
+    justify-content: center;  
+    gap: 16px;  
+    padding: 80px 0;  
+    color: #8892a4;  
+    font-size: 15px;  
+}

@@ -46,7 +46,10 @@ function Accounts() {
                     <div className="account-actions">
                         <Link to={`/editAccount/${account.id}`}>
                             <button className="btn-edit" disabled={!account.is_active}>Edit</button>
-                        </Link> 
+                        </Link>
+                        <Link to={`/transactions/${account.id}/${account.name}`}>
+                            <button className="btn-transactions" disabled={!account.is_active}>View Transactions</button>
+                        </Link>
                         <button onClick={() => handleDelete(account.id)} className="btn-delete" disabled={!account.is_active}>Delete</button>  
                     </div>  
                 </td>  

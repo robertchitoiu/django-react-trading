@@ -50,7 +50,7 @@ function App() {
             <CreateAccount />
           </ProtectedRoute>
         }/>
-        <Route path='/transactions' element={
+        <Route path='/transactions/:id/:name' element={
           <ProtectedRoute>
               <Transactions />
           </ProtectedRoute>

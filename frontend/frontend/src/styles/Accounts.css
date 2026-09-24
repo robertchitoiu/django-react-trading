@@ -141,6 +141,24 @@
     border-color: #3676f6;  
 }
 
+.accounts-page .btn-transactions {  
+    background-color: transparent;  
+    color: #8892a4;  
+    border: 1px solid #1e2d4a;  
+    padding: 6px 14px;  
+    border-radius: 6px;  
+    font-size: 13px;  
+    font-weight: 500;  
+    cursor: pointer;  
+    transition: all 0.2s;  
+    font-family: 'Inter', sans-serif;  
+}
+
+.accounts-page .btn-transactions:hover {  
+    color: #ffffff;  
+    border-color: #36f63d;  
+}
+
 .accounts-page .btn-delete {  
     background-color: transparent;  
     color: #8892a4;  
@@ -172,7 +190,8 @@
 }
 
 .accounts-page .btn-edit:disabled,  
-.accounts-page .btn-delete:disabled {  
+.accounts-page .btn-delete:disabled,
+.accounts-page .btn-transactions:disabled {  
     opacity: 0.3;  
     cursor: not-allowed;  
 }  
