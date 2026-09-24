@@ -11,6 +11,10 @@ function CreateAccount() {
 
     async function handleSubmit(e) {
         e.preventDefault()
+        if (!name || !currency) {
+            return alert('Missing fields!')
+        }
+
         try {
             await createAccount(name, currency)
             navigate('/accounts')

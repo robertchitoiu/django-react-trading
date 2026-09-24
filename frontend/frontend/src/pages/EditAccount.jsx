@@ -18,6 +18,10 @@ function EditAccount() {
 
     async function handleSubmit(e) {
         e.preventDefault()
+        if (!name || !currency) {
+            return alert('Missing fields!')
+        }
+
         try {
             await updateAccount(id, name, currency)
             navigate('/accounts')
