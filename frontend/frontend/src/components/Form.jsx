@@ -9,6 +9,8 @@ function Form({type}) {
     const [password, setPassword] = useState('')
     const [confirm, setConfirm] = useState('')
     const [email, setEmail] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
 
     const navigate = useNavigate()
 
@@ -19,7 +21,7 @@ function Form({type}) {
 
         if (type === 'register') {
             try {
-                await register(username, email, password, confirm)
+                await register(username, email, password, confirm, firstName, lastName)
                 navigate('/login')
             } catch (err) {
                 alert(err)
@@ -48,7 +50,19 @@ function Form({type}) {
                     </div>
                     {name === 'Register' &&
                         <div className="form-item">
-                            <label htmlFor="username-input">Email</label>
+                            <label htmlFor="firstName-input">First Name</label>
+                            <input onChange={e => setFirstName(e.target.value)} value={firstName} type='text' className="form-input" id="firstName-input"></input>
+                        </div>
+                    }
+                    {name === 'Register' &&
+                        <div className="form-item">
+                            <label htmlFor="lastName-input">Last Name</label>
+                            <input onChange={e => setLastName(e.target.value)} value={lastName} type='text' className="form-input" id="lastName-input"></input>
+                        </div>
+                    }
+                    {name === 'Register' &&
+                        <div className="form-item">
+                            <label htmlFor="email-input">Email</label>
                             <input onChange={e => setEmail(e.target.value)} value={email} type='email' className="form-input" id="email-input"></input>
                         </div>
                     }

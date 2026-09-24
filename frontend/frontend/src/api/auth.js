@@ -1,9 +1,9 @@
 import api from './axios'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants'
 
-export async function register(username, email, password, confirm_password) {
+export async function register(username, email, password, confirm_password, first_name, last_name) {
     try {
-        await api.post('api/auth/register/', {username, email, password, confirm_password})
+        await api.post('api/auth/register/', {username, email, password, confirm_password, first_name, last_name})
         return
     } catch(err) {
         throw(err)

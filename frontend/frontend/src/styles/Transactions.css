@@ -63,21 +63,6 @@
     background-color: #142040;  
 }
 
-.transactions-page .account-name {  
-    font-weight: 500;  
-}
-
-.transactions-page .account-balance {  
-    font-weight: 600;  
-    color: #00c087;  
-}
-
-.transactions-page .account-currency {  
-    color: #8892a4;  
-    font-size: 12px;  
-    font-weight: 400;  
-}
-
 .transactions-page .empty-state {  
     display: flex;  
     flex-direction: column;  

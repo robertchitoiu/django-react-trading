@@ -11,6 +11,7 @@ import Transactions from './pages/Transactions'
 import MyAccount from './pages/MyAccount'
 import EditAccount from './pages/EditAccount'
 import CreateAccount from './pages/CreateAccount'
+import NotFound from './pages/NotFound'
 
 function Logout() {
   localStorage.removeItem(ACCESS_TOKEN)
@@ -60,6 +61,7 @@ function App() {
             <MyAccount />
           </ProtectedRoute>
         }/>
+        <Route path='*' element={<NotFound />}/>
       </Routes>
     </BrowserRouter>
     </>
