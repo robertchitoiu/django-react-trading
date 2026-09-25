@@ -7,11 +7,13 @@ import { getNews } from '../api/externalApi'
 import NewsCard from '../components/NewsCard'
 import toast from 'react-hot-toast'
 import { TOAST_STYLE } from '../constants'
+import '../styles/Loading.css'
 
 function Home() {
     const [username, setUsername] = useState('')
     const [news, setNews] = useState([])
-    const [dashboard, setDashboard] = useState([])
+    const [dashboard, setDashboard] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         getUser()
@@ -22,11 +24,17 @@ function Home() {
             .catch(() => toast.error('Failed to load user data!', {style: TOAST_STYLE}))
 
         getNews()
-            .then(data => setNews(data))
-            .catch(() => toast.error('Failed to load news!', {style: TOAST_STYLE}))
+            .then(data => {
+                setNews(data)
+                setIsLoading(false)
+            })
+            .catch(() => {
+                toast.error('Failed to load news!', {style: TOAST_STYLE})
+                setIsLoading(false)
+            })
 
         getDashboard()
-            .then(data => {console.log(data); setDashboard(data)})
+            .then(data => setDashboard(data))
             .catch(() => toast.error('Failed to load dashboard data!', {style: TOAST_STYLE}))
     }, [])
 
@@ -61,10 +69,16 @@ function Home() {
                         </div>
                         <div className="hero-card">
                             <p className="card-label">Total Balance</p>
-                            <h2 className="card-value">{dashboard.total_balance}</h2>
+                            <h2 className="card-value">${dashboard.total_balance?.toFixed(2)}</h2>
                         </div>
                     </div>
                 </div>
+                {isLoading && 
+                    <div className='loading-container'>
+                        <div className="spinner"></div>  
+                        <p className="loading-text">Loading latest news...</p> 
+                    </div>
+                }
                 <div className="news-container">
                     {newsItems}
                 </div>
