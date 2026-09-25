@@ -9,3 +9,12 @@ export async function getUser() {
     }
     
 }
+
+export async function getDashboard() {
+    try {
+        const response = await api.get('api/dashboard/')
+        return response.data
+    }catch(err) {
+        throw(err)
+    }
+}

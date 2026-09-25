@@ -5,6 +5,7 @@ from .models import Account, Transaction
 from .serializers import TransactionSerializer, AccountSerializer, UserSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
+from django.db.models import Sum  
 import requests
 import os
 
@@ -101,3 +102,19 @@ def get_news(request):
         return Response(response.json(), status=status.HTTP_200_OK)
     except:
         return Response({'error': 'There was a problem with the api'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def dashboard(request):
+    total_accounts = Account.objects.filter(user=request.user).count()
+    total_transactions = Transaction.objects.filter(account__user=request.user).count()
+    result = Account.objects.filter(user=request.user, is_active=True).aggregate(total=Sum('balance'))
+    total_balance = result['total'] or 0
+
+    response = {
+        'total_accounts': total_accounts,
+        'total_transactions': total_transactions,
+        'total_balance': total_balance
+    }
+
+    return Response(response, status=status.HTTP_200_OK)
+

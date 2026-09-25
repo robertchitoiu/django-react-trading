@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
-import { getUser } from '../api/user'
+import { getDashboard, getUser } from '../api/user'
 import { Link } from 'react-router-dom'
 import '../styles/Home.css'
 import { getNews } from '../api/externalApi'
@@ -9,6 +9,7 @@ import NewsCard from '../components/NewsCard'
 function Home() {
     const [username, setUsername] = useState('')
     const [news, setNews] = useState([])
+    const [dashboard, setDashboard] = useState([])
 
     useEffect(() => {
         getUser()
@@ -19,7 +20,11 @@ function Home() {
             .catch(err => console.log(err))
 
         getNews()
-            .then(data => { console.log(data); setNews(data) })
+            .then(data => setNews(data))
+            .catch(err => console.log(err))
+
+        getDashboard()
+            .then(data => {console.log(data); setDashboard(data)})
             .catch(err => console.log(err))
     }, [])
 
@@ -46,15 +51,15 @@ function Home() {
                     <div className="hero-cards">
                         <div className="hero-card">
                             <p className="card-label">Total Accounts</p>
-                            <h2 className="card-value">—</h2>
+                            <h2 className="card-value">{dashboard.total_accounts}</h2>
                         </div>
                         <div className="hero-card">
                             <p className="card-label">Total Transactions</p>
-                            <h2 className="card-value">—</h2>
+                            <h2 className="card-value">{dashboard.total_transactions}</h2>
                         </div>
                         <div className="hero-card">
-                            <p className="card-label">Portfolio Status</p>
-                            <h2 className="card-value">Active</h2>
+                            <p className="card-label">Total Balance</p>
+                            <h2 className="card-value">{dashboard.total_balance}</h2>
                         </div>
                     </div>
                 </div>
