@@ -19,7 +19,7 @@ api.interceptors.response.use(
     response => response,
     async error => {
         if (error.response?.status === 401) {
-            const refresh = localStorage.get(REFRESH_TOKEN)
+            const refresh = localStorage.getItem(REFRESH_TOKEN)
             if (refresh) {
                 try {
                     const response = await api.post('/api/token/refresh/', {refresh})
