@@ -3,6 +3,8 @@ import { register, login } from "../api/auth"
 import { useNavigate } from "react-router-dom"
 import '../styles/Form.css'
 import bg from '../assets/formBackground.png'
+import { TOAST_STYLE } from "../constants"
+import toast from "react-hot-toast"
 
 function Form({type}) {
     const [username, setUsername] = useState('')
@@ -20,18 +22,24 @@ function Form({type}) {
         e.preventDefault()
 
         if (type === 'register') {
+            if (!username || !email || !password || !confirm || !firstName || !lastName){
+                return toast('Please fill in all fields!', {icon: '⚠️',style: TOAST_STYLE})
+            }
             try {
                 await register(username, email, password, confirm, firstName, lastName)
                 navigate('/login')
-            } catch (err) {
-                alert(err)
+            } catch {
+                toast.error('Something went wrong!', {style: TOAST_STYLE})
             }
         } else {
+            if (!username || !password) {
+                return toast('Please fill in all fields!', {icon: '⚠️',style: TOAST_STYLE})
+            }
             try {
                 await login(username, password)
                 navigate('/')
-            } catch(err) {
-                alert(err)
+            } catch {
+                toast.error('Something went wrong!', {style: TOAST_STYLE})
             }
         }
     }

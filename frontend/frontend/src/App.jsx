@@ -12,6 +12,7 @@ import MyAccount from './pages/MyAccount'
 import EditAccount from './pages/EditAccount'
 import CreateAccount from './pages/CreateAccount'
 import NotFound from './pages/NotFound'
+import { Toaster } from 'react-hot-toast'
 
 function Logout() {
   localStorage.removeItem(ACCESS_TOKEN)
@@ -22,48 +23,49 @@ function Logout() {
 function App() {
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/' element={
+      <Toaster />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/' element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }/>
+          <Route path='/logout' element={
           <ProtectedRoute>
-            <Home />
+            <Logout />
           </ProtectedRoute>
-        }/>
-        <Route path='/logout' element={
-        <ProtectedRoute>
-          <Logout />
-        </ProtectedRoute>
-        }/>
-        <Route path='/accounts' element={
-          <ProtectedRoute>
-            <Accounts />
-          </ProtectedRoute>
-        }/>
-        <Route path='/editAccount/:id' element={  
-          <ProtectedRoute>  
-              <EditAccount />  
-          </ProtectedRoute>  
-        }/>  
-        <Route path='/createAccount' element={
-          <ProtectedRoute>
-            <CreateAccount />
-          </ProtectedRoute>
-        }/>
-        <Route path='/transactions/:id/:name' element={
-          <ProtectedRoute>
-              <Transactions />
-          </ProtectedRoute>
-        }/>
-        <Route path='/myaccount' element={
-          <ProtectedRoute>
-            <MyAccount />
-          </ProtectedRoute>
-        }/>
-        <Route path='*' element={<NotFound />}/>
-      </Routes>
-    </BrowserRouter>
+          }/>
+          <Route path='/accounts' element={
+            <ProtectedRoute>
+              <Accounts />
+            </ProtectedRoute>
+          }/>
+          <Route path='/editAccount/:id' element={  
+            <ProtectedRoute>  
+                <EditAccount />  
+            </ProtectedRoute>  
+          }/>  
+          <Route path='/createAccount' element={
+            <ProtectedRoute>
+              <CreateAccount />
+            </ProtectedRoute>
+          }/>
+          <Route path='/transactions/:id/:name' element={
+            <ProtectedRoute>
+                <Transactions />
+            </ProtectedRoute>
+          }/>
+          <Route path='/myaccount' element={
+            <ProtectedRoute>
+              <MyAccount />
+            </ProtectedRoute>
+          }/>
+          <Route path='*' element={<NotFound />}/>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

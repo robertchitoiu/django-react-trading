@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import '../styles/Home.css'
 import { getNews } from '../api/externalApi'
 import NewsCard from '../components/NewsCard'
+import toast from 'react-hot-toast'
+import { TOAST_STYLE } from '../constants'
 
 function Home() {
     const [username, setUsername] = useState('')
@@ -17,15 +19,15 @@ function Home() {
                 const capitalizedUsername = data.username.charAt(0).toUpperCase() + data.username.slice(1)
                 setUsername(capitalizedUsername)
             })
-            .catch(err => console.log(err))
+            .catch(() => toast.error('Failed to load user data!', {style: TOAST_STYLE}))
 
         getNews()
             .then(data => setNews(data))
-            .catch(err => console.log(err))
+            .catch(() => toast.error('Failed to load news!', {style: TOAST_STYLE}))
 
         getDashboard()
             .then(data => {console.log(data); setDashboard(data)})
-            .catch(err => console.log(err))
+            .catch(() => toast.error('Failed to load dashboard data!', {style: TOAST_STYLE}))
     }, [])
 
     const newsItems = news.filter(news => !news.source.toLowerCase().includes('reuters')).slice(0, 12).map(news => {

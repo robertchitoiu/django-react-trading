@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { createAccount } from "../api/account"
 import '../styles/CreateAccount.css'
 import Navbar from "../components/Navbar"
+import toast from "react-hot-toast"
+import { TOAST_STYLE } from "../constants"
 
 function CreateAccount() {
     const [name, setName] = useState('')
@@ -12,14 +14,15 @@ function CreateAccount() {
     async function handleSubmit(e) {
         e.preventDefault()
         if (!name || !currency) {
-            return alert('Missing fields!')
+            return toast('Please fill in all fields!', {icon: '⚠️',style: TOAST_STYLE})
         }
 
         try {
             await createAccount(name, currency)
+            toast.success('Successfully updated!', {style: TOAST_STYLE})
             navigate('/accounts')
         }catch(err) {
-            console.log(err)
+            toast.error('Something went wrong!', {style: TOAST_STYLE})
         }
     }
 

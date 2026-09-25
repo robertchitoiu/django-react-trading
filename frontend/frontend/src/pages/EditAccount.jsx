@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { getAccountDetails, updateAccount } from "../api/account"
 import '../styles/EditAccount.css'
 import Navbar from "../components/Navbar"
+import toast from "react-hot-toast"
+import { TOAST_STYLE } from "../constants"
 
 function EditAccount() {
     const { id } = useParams()
@@ -13,20 +15,21 @@ function EditAccount() {
     useEffect(() => {
         getAccountDetails(id)
             .then(data => {setName(data.name); setCurrency(data.currency);})
-                .catch(err => console.log(err))
+                .catch(() => toast.error('Failed to load account data!', {style: TOAST_STYLE}))
     }, [])
 
     async function handleSubmit(e) {
         e.preventDefault()
-        if (!name || !currency) {
-            return alert('Missing fields!')
-        }
+        if (!name || !currency) {  
+            return toast('Please fill in all fields!', {icon: '⚠️',style: TOAST_STYLE})
+        } 
 
         try {
             await updateAccount(id, name, currency)
+            toast.success('Successfully updated!', {style: TOAST_STYLE})
             navigate('/accounts')
         }catch(err) {
-            console.log(err)
+            toast.error('Something went wrong!', {style: TOAST_STYLE})
         }        
     }
 

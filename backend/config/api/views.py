@@ -101,7 +101,7 @@ def get_news(request):
         response = requests.get(url)
         return Response(response.json(), status=status.HTTP_200_OK)
     except:
-        return Response({'error': 'There was a problem with the api'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'error': 'There was a problem with FINNHUB api'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
 def dashboard(request):

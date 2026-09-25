@@ -3,6 +3,8 @@ import { getTransactions } from "../api/transactions"
 import { useParams } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import '../styles/Transactions.css'
+import toast from "react-hot-toast"
+import { TOAST_STYLE } from "../constants"
 
 function Transactions() {
     const [transactions, setTransactions] = useState([])
@@ -11,7 +13,7 @@ function Transactions() {
     useEffect(() => {
         getTransactions(id)
             .then(data => setTransactions(data))
-                .catch(err => console.log(err))
+                .catch(() => toast.error('Failed to load transactions!', {style: TOAST_STYLE}))
     }, [])
 
     const transactionItems = transactions.map(transaction => {
