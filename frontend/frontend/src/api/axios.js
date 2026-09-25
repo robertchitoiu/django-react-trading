@@ -17,11 +17,24 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
     response => response,
-    error => {
+    async error => {
         if (error.response?.status === 401) {
-            localStorage.removeItem(ACCESS_TOKEN)
-            localStorage.removeItem(REFRESH_TOKEN)
-            window.location.href = '/login'
+            const refresh = localStorage.get(REFRESH_TOKEN)
+            if (refresh) {
+                try {
+                    const response = await api.post('/api/token/refresh/', {refresh})
+                    localStorage.setItem(ACCESS_TOKEN, response.data.access)
+                    error.config.headers.Authorization = `Bearer response.data.access`
+                    return api(error.config)
+
+                } catch {
+                    localStorage.removeItem(ACCESS_TOKEN)
+                    localStorage.removeItem(REFRESH_TOKEN)
+                    window.location.href = '/login'
+                }
+            } else {
+                window.location.href = '/login'
+            }
         }
         return Promise.reject(error)
     }
