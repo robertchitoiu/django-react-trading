@@ -118,3 +118,28 @@ def dashboard(request):
 
     return Response(response, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def balance_chart(request):
+    transactions = Transaction.objects.filter(account__user=request.user).order_by('date')
+    accounts = Account.objects.filter(user=request.user).order_by('created_at')
+    events = []
+    for account in accounts:
+        events.append({'date': account.created_at, 'type': 'account_created', 'amount': 10000})
+    for transaction in transactions:
+        events.append({'date': transaction.date, 'type': transaction.type, 'amount': transaction.amount})
+    events.sort(key=lambda x: x['date'])
+    balance_data = []
+    balance = 0
+
+    for e in events:
+        if e['type'] == 'sell':
+            balance = balance + e['amount']
+            balance_data.append({'date': e['date'], 'balance': balance})
+        elif e['type'] == 'buy':
+            balance = balance - e['amount']
+            balance_data.append({'date': e['date'], 'balance': balance})
+        elif e['type'] == 'account_created':
+            balance = balance + e['amount']
+            balance_data.append({'date': e['date'], 'balance': balance})
+
+    return Response(balance_data, status=status.HTTP_200_OK)

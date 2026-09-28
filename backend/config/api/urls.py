@@ -8,5 +8,6 @@ urlpatterns = [
     path('accounts/<int:id>/transactions/', views.transactions, name='transactions'),
     path('user/me/', views.user_details, name='user_details'),\
     path('news/', views.get_news, name='get_news'),
-    path('dashboard/', views.dashboard, name='dashboard')
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('user/me/chart/', views.balance_chart, name='chart')
 ]
