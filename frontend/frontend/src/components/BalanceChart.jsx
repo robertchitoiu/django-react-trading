@@ -15,7 +15,7 @@ function BalanceChart() {
 
 
     return (
-        <ResponsiveContainer width="70%" height={300}>  
+        <ResponsiveContainer width="100%" height={300}>  
             <LineChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>  
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e2d4a" />  
                 <XAxis   
