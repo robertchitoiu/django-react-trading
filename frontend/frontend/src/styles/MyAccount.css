@@ -10,7 +10,8 @@
 .my-account-page .page-header {  
     display: flex;  
     flex-direction: column;  
-    gap: 4px;  
+    gap: 4px;
+    margin-bottom: 5rem;
 }
 
 .my-account-page .header-title {  
