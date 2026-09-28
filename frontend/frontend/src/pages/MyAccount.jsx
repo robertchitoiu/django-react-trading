@@ -3,6 +3,9 @@ import { getUser } from '../api/user'
 import Navbar from '../components/Navbar'  
 import '../styles/MyAccount.css'
 import bg from '../assets/formBackground.png'
+import toast from 'react-hot-toast'
+import { TOAST_STYLE } from '../constants'
+import BalanceChart from '../components/BalanceChart'
 
 function MyAccount() {  
     const [user, setUser] = useState({})
@@ -10,8 +13,8 @@ function MyAccount() {
     useEffect(() => {  
         getUser()  
             .then(data => setUser(data))  
-            .catch(err => console.log(err))  
-    }, [])
+            .catch(() => toast.error('Failed to load user data!', {style: TOAST_STYLE}))
+    })
 
     return (  
         <>  
@@ -53,8 +56,8 @@ function MyAccount() {
                             </div>  
                         </div>  
                     </div>
-                </div> 
-                <img src={bg} alt='trading-background'></img>   
+                </div>
+                <BalanceChart />  
             </div>
         </>  
     )  

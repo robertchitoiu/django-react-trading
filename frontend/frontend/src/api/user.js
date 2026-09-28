@@ -5,7 +5,7 @@ export async function getUser() {
         const response = await api.get('api/user/me/')
         return response.data
     } catch(err) {
-        throw err
+        throw(err)
     }
     
 }
@@ -14,7 +14,16 @@ export async function getDashboard() {
     try {
         const response = await api.get('api/dashboard/')
         return response.data
-    }catch(err) {
+    } catch(err) {
+        throw(err)
+    }
+}
+
+export async function getChartData() {
+    try {
+        const response = await api.get('api/user/me/chart/')
+        return response.data
+    } catch(err) {
         throw(err)
     }
 }
