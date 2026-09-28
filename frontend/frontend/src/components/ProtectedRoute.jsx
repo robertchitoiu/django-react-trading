@@ -16,16 +16,20 @@ function ProtectedRoute({ children }) {
     async function refresh() {
         const refreshToken = localStorage.getItem(REFRESH_TOKEN)
 
+        if (!refreshToken) {
+            setIsAuthorized(false)
+            return
+        }
+
         try {
-            const response = await api.post('api/token/refresh/', { refresh: refreshToken})
+            const response = await api.post('api/token/refresh/', { refresh: refreshToken })
             localStorage.setItem(ACCESS_TOKEN, response.data.access)
             setIsAuthorized(true)
-        } catch(err) {
-            console.log(err)
+        } catch (err) {
             setIsAuthorized(false)
         }
     }
-    
+
     async function auth() {
         const token = localStorage.getItem(ACCESS_TOKEN)
 
@@ -36,7 +40,7 @@ function ProtectedRoute({ children }) {
 
         const decodedToken = jwtDecode(token)
         const expirationDate = decodedToken.exp
-        
+
         if (expirationDate < Date.now() / 1000) {
             await refresh()
         } else {
