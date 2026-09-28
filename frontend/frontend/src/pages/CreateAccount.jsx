@@ -19,7 +19,7 @@ function CreateAccount() {
 
         try {
             await createAccount(name, currency)
-            toast.success('Successfully updated!', {style: TOAST_STYLE})
+            toast.success('Successfully created!', {style: TOAST_STYLE})
             navigate('/accounts')
         }catch(err) {
             toast.error('Something went wrong!', {style: TOAST_STYLE})
