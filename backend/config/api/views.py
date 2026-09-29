@@ -99,7 +99,10 @@ def get_news(request):
     url = f'https://finnhub.io/api/v1/news?category=general&token={api_key}'
     try:
         response = requests.get(url)
-        return Response(response.json(), status=status.HTTP_200_OK)
+        if 200 <= response.status_code <= 203:
+            return Response(response.json(), status=response.status_code)
+        else:
+            return Response(status=response.status_code)
     except:
         return Response({'error': 'There was a problem with FINNHUB api'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -143,3 +146,17 @@ def balance_chart(request):
             balance_data.append({'date': e['date'], 'balance': balance})
 
     return Response(balance_data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_stock(request, symbol):
+    api_key = os.environ.get('FINNHUB_API_KEY')
+    url = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={api_key}'
+    try:
+        response = requests.get(url)
+        if 200 <= response.status_code <= 203:
+            return Response(response.json(), status=response.status_code)
+        else:
+            return Response(status=response.status_code)
+    except:
+        return Response({'error': 'There was a problem with FINNHUB api'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

@@ -22,9 +22,9 @@ api.interceptors.response.use(
             const refresh = localStorage.getItem(REFRESH_TOKEN)
             if (refresh) {
                 try {
-                    const response = await api.post('/api/token/refresh/', {refresh})
+                    const response = await api.post('/api/token/refresh/', { refresh })
                     localStorage.setItem(ACCESS_TOKEN, response.data.access)
-                    error.config.headers.Authorization = `Bearer response.data.access`
+                    error.config.headers.Authorization = `Bearer ${response.data.access}`
                     return api(error.config)
 
                 } catch {

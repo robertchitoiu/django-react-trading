@@ -10,4 +10,6 @@ urlpatterns = [
     path('news/', views.get_news, name='get_news'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('user/me/chart/', views.balance_chart, name='chart')
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('stocks/<str:symbol>/', views.get_stock, name='get_stocks')
 ]
