@@ -13,6 +13,8 @@ import EditAccount from './pages/EditAccount'
 import CreateAccount from './pages/CreateAccount'
 import NotFound from './pages/NotFound'
 import { Toaster } from 'react-hot-toast'
+import Stocks from './pages/Stocks'
+import Watchlist from './pages/Watchlist'
 
 function Logout() {
   localStorage.removeItem(ACCESS_TOKEN)
@@ -61,6 +63,16 @@ function App() {
           <Route path='/myaccount' element={
             <ProtectedRoute>
               <MyAccount />
+            </ProtectedRoute>
+          }/>
+          <Route path='/stocks' element={
+            <ProtectedRoute>
+              <Stocks />
+            </ProtectedRoute>
+          }/>
+          <Route path='/watchlist' element={
+            <ProtectedRoute>
+              <Watchlist />
             </ProtectedRoute>
           }/>
           <Route path='*' element={<NotFound />}/>

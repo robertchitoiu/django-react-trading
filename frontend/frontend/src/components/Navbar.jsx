@@ -10,7 +10,7 @@ function Navbar() {
                 <img src={logo} alt="logo"></img>
             </Link>
             <Link className='nav-link' to='/accounts'>Accounts</Link>
-            <Link className='nav-link' to='/transactions'>Stocks</Link>
+            <Link className='nav-link' to='/stocks'>Stocks</Link>
             <Link className='nav-link' to='/watchlist'>Watchlist</Link>
         </div>
         <div className="navbar-right">
