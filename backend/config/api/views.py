@@ -75,14 +75,14 @@ def transactions(request, id):
     elif request.method == 'POST':
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
-            amount = serializer.validated_data.get('amount')
+            price = serializer.validated_data.get('price')
             transaction_type = serializer.validated_data.get('type') 
             if transaction_type == 'buy':
-                if account.balance < amount:  
+                if account.balance < price:  
                     return Response({'error': 'Insufficient balance'}, status=status.HTTP_400_BAD_REQUEST)
-                account.balance = account.balance - amount
+                account.balance = account.balance - price
             else:
-                account.balance = account.balance + amount 
+                account.balance = account.balance + price 
             serializer.save(account=account)
             account.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -127,22 +127,22 @@ def balance_chart(request):
     accounts = Account.objects.filter(user=request.user).order_by('created_at')
     events = []
     for account in accounts:
-        events.append({'date': account.created_at, 'type': 'account_created', 'amount': 10000})
+        events.append({'date': account.created_at, 'type': 'account_created', 'price': 10000})
     for transaction in transactions:
-        events.append({'date': transaction.date, 'type': transaction.type, 'amount': transaction.amount})
+        events.append({'date': transaction.date, 'type': transaction.type, 'price': transaction.price})
     events.sort(key=lambda x: x['date'])
     balance_data = []
     balance = 0
 
     for e in events:
         if e['type'] == 'sell':
-            balance = balance + e['amount']
+            balance = balance + e['price']
             balance_data.append({'date': e['date'], 'balance': balance})
         elif e['type'] == 'buy':
-            balance = balance - e['amount']
+            balance = balance - e['price']
             balance_data.append({'date': e['date'], 'balance': balance})
         elif e['type'] == 'account_created':
-            balance = balance + e['amount']
+            balance = balance + e['price']
             balance_data.append({'date': e['date'], 'balance': balance})
 
     return Response(balance_data, status=status.HTTP_200_OK)

@@ -24,7 +24,8 @@ function Transactions() {
                             {transaction.type}  
                     </span>
                 </td>
-                <td>{transaction.amount}</td>  
+                <td>{transaction.price}</td>
+                <td>{transaction.quantity}</td>
                 <td>{new Date(transaction.date).toLocaleDateString()}</td> 
             </tr>  
         )
@@ -50,7 +51,8 @@ function Transactions() {
                         <thead>  
                             <tr>  
                                 <th>Type</th>  
-                                <th>Amount</th>  
+                                <th>Amount</th>
+                                <th>Quantity</th>  
                                 <th>Creation Date</th>   
                             </tr>  
                         </thead>  
