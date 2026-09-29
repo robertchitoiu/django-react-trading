@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Account, Transaction
+from .models import Account, Transaction, WatchlistItem
 
 class UserSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True)
@@ -28,10 +28,16 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ['id', 'balance', 'currency', 'created_at', 'user', 'name', 'is_active']
-        extra_kwargs = {'created_at': {'read_only': True}, 'user': {'read_only': True}, 'balance': {'read_only': True}}
+        extra_kwargs = {'id': {'read_only': True}, 'created_at': {'read_only': True}, 'user': {'read_only': True}, 'balance': {'read_only': True}}
 
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ['id', 'type', 'amount', 'date', 'account']
-        extra_kwargs = {'date': {'read_only': True}, 'account': {'read_only': True}}
+        extra_kwargs = {'id': {'read_only': True}, 'date': {'read_only': True}, 'account': {'read_only': True}}
+
+class WatchlistItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatchlistItem
+        fields = ['id', 'symbol']
+        extra_kwargs = {'id': {'read_only': True}}

@@ -18,5 +18,14 @@ class Account(models.Model):
 class Transaction(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     type = models.CharField(max_length=15)
-    amount = models.DecimalField(max_digits=7, decimal_places=2)
+    symbol = models.CharField(max_length=10, null=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2)
+    quantity = models.IntegerField(default=1)
     date = models.DateField(auto_now_add=True)
+
+class WatchlistItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    symbol = models.CharField(max_length=10)
+
+    class Meta:
+        unique_together = [['user', 'symbol']]
