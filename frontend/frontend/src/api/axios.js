@@ -19,6 +19,9 @@ api.interceptors.response.use(
     response => response,
     async error => {
         if (error.response?.status === 401) {
+            if (error.config.url === '/api/token/refresh/') {
+                return Promise.reject(error)
+            }
             const refresh = localStorage.getItem(REFRESH_TOKEN)
             if (refresh) {
                 try {
