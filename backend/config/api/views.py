@@ -150,13 +150,24 @@ def balance_chart(request):
 @api_view(['GET'])
 def get_stock(request, symbol):
     api_key = os.environ.get('FINNHUB_API_KEY')
-    url = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={api_key}'
+    url_symbol_existence = f'https://finnhub.io/api/v1/search?q={symbol}&token={api_key}'
+    url_symbol_data = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={api_key}'
+
     try:
-        response = requests.get(url)
-        if 200 <= response.status_code <= 203:
-            return Response(response.json(), status=response.status_code)
+        response_existence = requests.get(url_symbol_existence)
+        if response_existence.status_code != 200:
+            return Response(
+                {'error': 'There was a problem with FINNHUB api'},
+                status=status.HTTP_502_BAD_GATEWAY
+            )
+        exist_data = response_existence.json()
+        if exist_data['count'] == 0:
+            return(Response(status=status.HTTP_404_NOT_FOUND))
+        response_data = requests.get(url_symbol_data)
+        if 200 <= response_data.status_code <= 203:
+            return Response(response_data.json(), status=response_data.status_code)
         else:
-            return Response(status=response.status_code)
+            return Response(status=response_data.status_code)
     except:
-        return Response({'error': 'There was a problem with FINNHUB api'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'error': 'There was a problem with FINNHUB api'}, status=status.HTTP_502_BAD_GATEWAY)
 
