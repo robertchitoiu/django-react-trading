@@ -18,9 +18,9 @@ class Account(models.Model):
 class Transaction(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     type = models.CharField(max_length=15)
-    symbol = models.CharField(max_length=10, null=True)
+    symbol = models.CharField(max_length=10)
     price = models.DecimalField(max_digits=7, decimal_places=2)
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField()
     date = models.DateField(auto_now_add=True)
 
 class WatchlistItem(models.Model):
@@ -29,3 +29,11 @@ class WatchlistItem(models.Model):
 
     class Meta:
         unique_together = [['user', 'symbol']]
+
+class PortfolioItem(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    symbol = models.CharField(max_length=10)
+    quantity = models.IntegerField()
+
+    class Meta:
+            unique_together = [['account', 'symbol']]
