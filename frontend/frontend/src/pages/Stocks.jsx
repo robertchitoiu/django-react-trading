@@ -21,7 +21,7 @@ function Stocks() {
                 setSymbolData(data)
                 setSearchedSymbol(symbol.toUpperCase())
             })
-            .catch(() => toast.error('Stock not found!', { style: TOAST_STYLE }))
+            .catch((err) => toast.error(err.response.data.error, { style: TOAST_STYLE }))
     }
 
     function handlePopularClick(s) {
@@ -31,22 +31,24 @@ function Stocks() {
                 setSymbolData(data)
                 setSearchedSymbol(s)
             })
-            .catch(() => toast.error('Stock not found!', { style: TOAST_STYLE }))
+            .catch((err) => toast.error(err.response.data.error, { style: TOAST_STYLE }))
     }
 
     async function handleBuy() {
         try {
-            await createTransaction(1, symbolData.c, 2, 'buy')
+            await createTransaction(1, symbolData.c, 2, 'buy', symbol)
+            toast.success('Successfully bought!', { style: TOAST_STYLE })
         } catch (err) {
-            toast.error('Did not work!', { style: TOAST_STYLE })
+            toast.error(err.response.data.error, { style: TOAST_STYLE })
         }
     }
 
     async function handleSell() {
         try {
-            await createTransaction(10, symbolData.c, 'sell')
+            await createTransaction(1, symbolData.c, 2, 'sell', symbol)
+            toast.success('Successfully sold!', { style: TOAST_STYLE })
         } catch (err) {
-            toast.error('Did not work!', { style: TOAST_STYLE })
+            toast.error(err.response.data.error, { style: TOAST_STYLE })
         }
     }
 

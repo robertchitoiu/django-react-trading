@@ -21,21 +21,21 @@ function Home() {
                 const capitalizedUsername = data.username.charAt(0).toUpperCase() + data.username.slice(1)
                 setUsername(capitalizedUsername)
             })
-            .catch(() => toast.error('Failed to load user data!', {style: TOAST_STYLE}))
+            .catch((err) => toast.error(err.response.data.error, { style: TOAST_STYLE }))
 
         getNews()
             .then(data => {
                 setNews(data)
                 setIsLoading(false)
             })
-            .catch(() => {
-                toast.error('Failed to load news!', {style: TOAST_STYLE})
+            .catch((err) => {
+                toast.error(err.response.data.error, { style: TOAST_STYLE })
                 setIsLoading(false)
             })
 
         getDashboard()
             .then(data => setDashboard(data))
-            .catch(() => toast.error('Failed to load dashboard data!', {style: TOAST_STYLE}))
+            .catch((err) => toast.error(err.response.data.error, { style: TOAST_STYLE }))
     }, [])
 
     const newsItems = news.filter(news => !news.source.toLowerCase().includes('reuters')).slice(0, 12).map(news => {
@@ -73,10 +73,10 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                {isLoading && 
+                {isLoading &&
                     <div className='loading-container'>
-                        <div className="spinner"></div>  
-                        <p className="loading-text">Loading latest news...</p> 
+                        <div className="spinner"></div>
+                        <p className="loading-text">Loading latest news...</p>
                     </div>
                 }
                 <div className="news-container">

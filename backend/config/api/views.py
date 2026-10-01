@@ -17,7 +17,7 @@ def register(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 def accounts(request):
@@ -30,20 +30,20 @@ def accounts(request):
         if serializer.is_valid():
             serializer.save(user=request.user, balance=10000)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PATCH', 'DELETE'])
 def accounts_detail(request, id):
     try:
         account = Account.objects.get(id=id)
     except Account.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'Account not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if account.user != request.user:
-        return Response(status=status.HTTP_403_FORBIDDEN)
+        return Response({'error': 'Access forbidden'}, status=status.HTTP_403_FORBIDDEN)
 
     if not account.is_active:
-        return Response(status=status.HTTP_403_FORBIDDEN)
+        return Response({'error': 'Access forbidden'}, status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'GET':
         serializer = AccountSerializer(account)
@@ -57,8 +57,8 @@ def accounts_detail(request, id):
         serializer = AccountSerializer(account, data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'error': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 def transactions(request, id):
@@ -117,9 +117,12 @@ def transactions(request, id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])  
-def user_details(request):  
-    serializer = UserSerializer(request.user)  
-    return Response(serializer.data, status=status.HTTP_200_OK)
+def user_details(request):
+    try:  
+        serializer = UserSerializer(request.user)  
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except:
+        return Response({'error': 'Failed to load user data'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def get_news(request):
@@ -136,18 +139,21 @@ def get_news(request):
 
 @api_view(['GET'])
 def dashboard(request):
-    total_accounts = Account.objects.filter(user=request.user).count()
-    total_transactions = Transaction.objects.filter(account__user=request.user).count()
-    result = Account.objects.filter(user=request.user, is_active=True).aggregate(total=Sum('balance'))
-    total_balance = result['total'] or 0
+    try:
+        total_accounts = Account.objects.filter(user=request.user).count()
+        total_transactions = Transaction.objects.filter(account__user=request.user).count()
+        result = Account.objects.filter(user=request.user, is_active=True).aggregate(total=Sum('balance'))
+        total_balance = result['total'] or 0
 
-    response = {
-        'total_accounts': total_accounts,
-        'total_transactions': total_transactions,
-        'total_balance': total_balance
-    }
+        response = {
+            'total_accounts': total_accounts,
+            'total_transactions': total_transactions,
+            'total_balance': total_balance
+        }
 
-    return Response(response, status=status.HTTP_200_OK)
+        return Response(response, status=status.HTTP_200_OK)
+    except:
+        return Response({'error': 'Failed to load dashboard data'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def balance_chart(request):
@@ -190,12 +196,12 @@ def get_stock(request, symbol):
             )
         exist_data = response_existence.json()
         if exist_data['count'] == 0:
-            return(Response(status=status.HTTP_404_NOT_FOUND))
+            return Response({"error": "Stock not found"}, status=status.HTTP_404_NOT_FOUND)
         response_data = requests.get(url_symbol_data)
         if 200 <= response_data.status_code <= 203:
             return Response(response_data.json(), status=response_data.status_code)
         else:
-            return Response(status=response_data.status_code)
+            return Response({"error": "There was a problem with the transaction"}, status=response_data.status_code)
     except:
         return Response({'error': 'There was a problem with FINNHUB api'}, status=status.HTTP_502_BAD_GATEWAY)
 
