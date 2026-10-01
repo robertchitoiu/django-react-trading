@@ -9,9 +9,9 @@ export async function getTransactions(id) {
     }
 }
 
-export async function createTransaction(accId, price, quantity, type) {
+export async function createTransaction(accId, price, quantity, type, symbol) {
     try {
-        const response = await api.post(`api/accounts/${accId}/transactions/`, { price, quantity, type })
+        const response = await api.post(`api/accounts/${accId}/transactions/`, { price, quantity, type, symbol })
         return response.data
     } catch (err) {
         throw (err)

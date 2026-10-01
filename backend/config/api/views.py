@@ -1,13 +1,14 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Account, Transaction
-from .serializers import TransactionSerializer, AccountSerializer, UserSerializer
+from .models import Account, Transaction, PortfolioItem
+from .serializers import TransactionSerializer, AccountSerializer,  UserSerializer, PortfolioItemSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from django.db.models import Sum  
 import requests
 import os
+from django.db import transaction
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -77,16 +78,41 @@ def transactions(request, id):
         if serializer.is_valid():
             price = serializer.validated_data.get('price')
             quantity = serializer.validated_data.get('quantity')
+            symbol = serializer.validated_data.get('symbol')
             cost = price * quantity
-            transaction_type = serializer.validated_data.get('type') 
+            transaction_type = serializer.validated_data.get('type')
+
             if transaction_type == 'buy':
                 if account.balance < cost:  
                     return Response({'error': 'Insufficient balance'}, status=status.HTTP_400_BAD_REQUEST)
-                account.balance = account.balance - cost
-            else:
-                account.balance = account.balance + cost 
-            serializer.save(account=account)
-            account.save()
+                try:
+                    port_item = PortfolioItem.objects.get(account=account, symbol=symbol)
+                    port_item.quantity += quantity
+                except PortfolioItem.DoesNotExist:
+                    port_item = PortfolioItem(account=account, symbol=symbol, quantity=quantity)
+            elif transaction_type == 'sell':
+                try:
+                    port_item = PortfolioItem.objects.get(account=account, symbol=symbol)
+                    if port_item.quantity >= quantity:
+                        port_item.quantity -= quantity
+                    else:
+                        return Response({'error': 'Not enough holdings.'}, status=status.HTTP_400_BAD_REQUEST)
+                except PortfolioItem.DoesNotExist:
+                    return Response({'error': 'You do not hold this stock.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            with transaction.atomic():
+                if transaction_type == 'buy':
+                    port_item.save()
+                    account.balance = account.balance - cost
+                elif transaction_type == 'sell':
+                    if port_item.quantity == 0:
+                        port_item.delete()
+                    else:
+                        port_item.save()
+                    account.balance = account.balance + cost 
+                serializer.save(account=account)
+                account.save()
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

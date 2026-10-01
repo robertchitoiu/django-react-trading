@@ -33,7 +33,7 @@ class AccountSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ['id', 'type', 'price', 'quantity', 'date', 'account']
+        fields = ['id', 'type', 'price', 'quantity', 'date', 'account', 'symbol']
         extra_kwargs = {'id': {'read_only': True}, 'date': {'read_only': True}, 'account': {'read_only': True}}
 
 class WatchlistItemSerializer(serializers.ModelSerializer):

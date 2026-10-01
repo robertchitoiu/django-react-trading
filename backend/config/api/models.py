@@ -16,8 +16,13 @@ class Account(models.Model):
     is_active = models.BooleanField(default=True)
 
 class Transaction(models.Model):
+    TYPE_CHOICES = [
+         ('buy', 'Buy'),
+         ('sell', 'Sell')
+    ]
+
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    type = models.CharField(max_length=15)
+    type = models.CharField(max_length=15, choices=TYPE_CHOICES)
     symbol = models.CharField(max_length=10)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     quantity = models.IntegerField()
