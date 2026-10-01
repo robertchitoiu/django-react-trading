@@ -13,55 +13,55 @@ function Transactions() {
     useEffect(() => {
         getTransactions(id)
             .then(data => setTransactions(data))
-                .catch(() => toast.error('Failed to load transactions!', {style: TOAST_STYLE}))
+            .catch(() => toast.error('Failed to load transactions!', { style: TOAST_STYLE }))
     }, [])
 
     const transactionItems = transactions.map(transaction => {
-        return(
-             <tr key={transaction.id}>
+        return (
+            <tr key={transaction.id}>
                 <td>
-                    <span className={`transaction-type ${transaction.type === 'buy' ? 'type-buy' : 'type-sell'}`}>  
-                            {transaction.type}  
+                    <span className={`transaction-type ${transaction.type === 'buy' ? 'type-buy' : 'type-sell'}`}>
+                        {transaction.type}
                     </span>
                 </td>
                 <td>{transaction.price}</td>
                 <td>{transaction.quantity}</td>
-                <td>{new Date(transaction.date).toLocaleDateString()}</td> 
-            </tr>  
+                <td>{new Date(transaction.date).toLocaleDateString()}</td>
+            </tr>
         )
     })
 
     return (
-        <>  
-            <Navbar />  
+        <>
+            <Navbar />
             <div className="transactions-page">
-                <div className="header-container">  
-                    <div>  
-                        <h1 className="header-title">Transactions</h1>  
+                <div className="header-container">
+                    <div>
+                        <h1 className="header-title">Transactions</h1>
                         <h2 className="header-subtitle">Account: {name}</h2>
-                        <p className="header-subtitle">Here you can view all the transaction you have done in the past.</p>  
+                        <p className="header-subtitle">Here you can view all the transaction you have done in the past.</p>
                     </div>
                 </div>
-                {transactions.length === 0 ? (  
-                    <div className="empty-state">  
-                        <p>You don't have any transactions in this account yet.</p>  
-                    </div>  
-                ) : (  
-                    <table className="table-container">  
-                        <thead>  
-                            <tr>  
-                                <th>Type</th>  
-                                <th>Amount</th>
-                                <th>Quantity</th>  
-                                <th>Creation Date</th>   
-                            </tr>  
-                        </thead>  
-                        <tbody>  
-                            {transactionItems}  
-                        </tbody>  
-                    </table>  
+                {transactions.length === 0 ? (
+                    <div className="empty-state">
+                        <p>You don't have any transactions in this account yet.</p>
+                    </div>
+                ) : (
+                    <table className="table-container">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Stock Price</th>
+                                <th>Quantity</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {transactionItems}
+                        </tbody>
+                    </table>
                 )}
-            </div>  
+            </div>
         </>
     )
 }
