@@ -15,6 +15,7 @@ import NotFound from './pages/NotFound'
 import { Toaster } from 'react-hot-toast'
 import Stocks from './pages/Stocks'
 import Watchlist from './pages/Watchlist'
+import Modal from 'react-modal' 
 
 function Logout() {
   localStorage.removeItem(ACCESS_TOKEN)
@@ -23,6 +24,8 @@ function Logout() {
 }
 
 function App() {
+  Modal.setAppElement('#root')
+
   return (
     <>
       <Toaster />

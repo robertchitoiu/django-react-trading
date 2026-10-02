@@ -5,9 +5,14 @@ import '../styles/Accounts.css'
 import { Link } from "react-router-dom"
 import toast from 'react-hot-toast'
 import { TOAST_STYLE } from '../constants'
+import Modal from 'react-modal'
+import { MODAL_STYLE } from "../constants"
+import "../styles/Modal.css"
 
 function Accounts() {
     const [accounts, setAccounts] = useState([])
+    const [showModal, setShowModal] = useState(false)
+    const [accountToDelete, setAccountToDelete] = useState()
 
     useEffect(() => {
         getAccounts()
@@ -15,13 +20,18 @@ function Accounts() {
             .catch(err => toast.error(err.response.data.error, { style: TOAST_STYLE }))
     }, [])
 
-    function handleDelete(id) {
-        const confirmed = window.confirm('Are you sure you want to delete this account?')
-        if (!confirmed) return
-        deleteAccount(id).catch(err => console.log(err))
+    function handleDelete(id) { 
+        setShowModal(true)
+        setAccountToDelete(id)
+    }
+
+    function confirmDelete() {
+        deleteAccount(accountToDelete).catch(err => toast.error(err.response.data.error, { style: TOAST_STYLE }))
         setAccounts(prevAcounts => prevAcounts.map(account => {
-            return account.id === id ? { ...account, is_active: false } : account
+            return account.id === accountToDelete ? { ...account, is_active: false } : account
         }))
+        setShowModal(false)
+        toast.success('Successfully deleted', { style: TOAST_STYLE })
     }
 
     const accountsItems = accounts.map(account => {
@@ -62,6 +72,26 @@ function Accounts() {
     return (
         <>
             <Navbar />
+            <Modal  
+                isOpen={showModal}  
+                onRequestClose={() => setShowModal(false)}  
+                style={MODAL_STYLE}  
+            >  
+                <h3 className='modal-header'>  
+                    Delete Account  
+                </h3>  
+                <p className='modal-subheader'>  
+                    Are you sure you want to delete this account? This action cannot be undone.  
+                </p>  
+                <div className='modal-actions'>  
+                    <button className="modal-btn-cancel" onClick={() => setShowModal(false)}>  
+                        Cancel  
+                    </button>  
+                    <button className="modal-btn-delete" onClick={confirmDelete}>  
+                        Delete  
+                    </button>  
+                </div> 
+            </Modal>
             <div className="accounts-page">
                 <div className="header-container">
                     <div>

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import { getStock } from "../api/stocks"
 import toast from "react-hot-toast"
@@ -6,6 +6,9 @@ import { TOAST_STYLE } from "../constants"
 import '../styles/Stocks.css'
 import { createTransaction } from "../api/transactions"
 import LoadingComponent from "../components/LoadingComponent"
+import Modal from 'react-modal'
+import { MODAL_STYLE } from "../constants"
+import { getAccounts } from "../api/account"
 
 const POPULAR_STOCKS = ['AAPL', 'TSLA', 'GOOGL', 'MSFT', 'NVDA', 'META', 'AMZN', 'BTC-USD']
 
@@ -14,6 +17,17 @@ function Stocks() {
     const [symbolData, setSymbolData] = useState(null)
     const [searchedSymbol, setSearchedSymbol] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [action, setAction] = useState('')
+    const [quantity, setQuantity] = useState()
+    const [accounts, setAccounts] = useState([])
+    const [selectedAccount, setSelectedAccount] = useState({})
+
+    useEffect(() => {
+        getAccounts()
+            .then(data => setAccounts(data.filter(account => account.is_active)))
+                .catch(err => toast.error(err.response.data.error, { style: TOAST_STYLE }))
+    }, [])
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -26,6 +40,16 @@ function Stocks() {
                 setIsLoading(false)
             })
             .catch((err) => {
+                setSearchedSymbol(symbol.toUpperCase())
+                setSymbolData({  
+                c: 229.87,    // current price  
+                h: 231.45,    // high  
+                l: 228.10,    // low  
+                o: 229.00,    // open  
+                pc: 228.52,   // previous close  
+                d: 1.35,      // change  
+                dp: 0.59      // percent change  
+                })
                 toast.error(err.response.data.error, { style: TOAST_STYLE })
                 setIsLoading(false)
             })
@@ -42,27 +66,79 @@ function Stocks() {
     }
 
     async function handleBuy() {
-        try {
-            await createTransaction(1, symbolData.c, 2, 'buy', symbol)
-            toast.success('Successfully bought!', { style: TOAST_STYLE })
-        } catch (err) {
-            toast.error(err.response.data.error, { style: TOAST_STYLE })
-        }
+        if (!selectedAccount || !quantity) {
+            return toast.error('Please fill all fields', { style: TOAST_STYLE })
+        }  
+        try {  
+            await createTransaction(selectedAccount, symbolData.c, quantity, 'buy', searchedSymbol)  
+            toast.success('Successfully bought!', { style: TOAST_STYLE })  
+            setShowModal(false)  
+        } catch (err) {  
+            toast.error(err.response.data.error, { style: TOAST_STYLE })  
+        }  
     }
 
     async function handleSell() {
+        if (!selectedAccount || !quantity) {
+            return toast.error('Please fill all fields', { style: TOAST_STYLE })
+        } 
         try {
-            await createTransaction(1, symbolData.c, 2, 'sell', symbol)
+            await createTransaction(selectedAccount, symbolData.c, quantity, 'sell', symbol)
             toast.success('Successfully sold!', { style: TOAST_STYLE })
         } catch (err) {
             toast.error(err.response.data.error, { style: TOAST_STYLE })
         }
     }
 
+    function openModal(action){
+        setShowModal(true)
+        setAction(action)
+    }
 
     return (
         <>
             <Navbar />
+            <Modal 
+                isOpen={showModal}
+                onRequestClose={() => setShowModal(false)}
+                style={MODAL_STYLE}
+            >
+                <h3 className='modal-header'>  
+                    {action} {symbol}  
+                </h3>  
+                <p className='modal-subheader'>  
+                    Select how much of {symbol} you want to {action.toLowerCase()} and in which account:  
+                </p>
+                <div className="stock-inputs">
+                    <input
+                        type="text"
+                        className="modal-input"
+                        placeholder="Enter quantity (e.g. 1,2,3...)"
+                        value={quantity}
+                        onChange={e => setQuantity(e.target.value)}
+                    />
+                    <select  
+                        className="modal-input"  
+                        value={selectedAccount}  
+                        onChange={e => setSelectedAccount(e.target.value)}  
+                    >  
+                        <option value="">Select account</option>  
+                        {accounts.map(account => (  
+                            <option key={account.id} value={account.id}>  
+                                {account.name} — {account.balance} {account.currency}  
+                            </option>  
+                        ))}  
+                    </select>  
+                </div>  
+                <div className='modal-actions'>  
+                    <button className="modal-btn-cancel" onClick={() => setShowModal(false)}>  
+                        Cancel  
+                    </button>  
+                    <button className={action === 'Buy' ? "modal-btn-buy" : "modal-btn-sell"} onClick={action === 'Buy' ? handleBuy : handleSell}>  
+                        {action}  
+                    </button>  
+                </div>
+            </Modal>
             <div className="stocks-page">
                 <div className="stocks-hero">
                     <h1 className="stocks-title">Search Stocks</h1>
@@ -119,8 +195,8 @@ function Stocks() {
                                 </div>
                             </div>
                             <div className="stock-actions">
-                                <button onClick={handleBuy} className="btn-buy">Buy</button>
-                                <button onClick={handleSell} className="btn-sell">Sell</button>
+                                <button onClick={() => openModal('Buy')} className="btn-buy">Buy</button>
+                                <button onClick={() => openModal('Sell')} className="btn-sell">Sell</button>
                                 <button className="btn-watchlist">+ Watchlist</button>
                             </div>
                         </div>
