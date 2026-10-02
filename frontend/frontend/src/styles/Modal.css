@@ -1,0 +1,117 @@
+.modal-header{
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.modal-subheader{
+    color: #8892a4;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.modal-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.modal-btn-cancel{
+    background-color: transparent;
+    color: #8892a4;
+    border: 1px solid #1e2d4a;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.modal-btn-delete{
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal-btn-cancel:hover {  
+    color: #ffffff;  
+    border-color: #3676f6;  
+}
+
+.modal-btn-delete:hover {  
+    background-color: #e63946;  
+}
+
+.modal-btn-buy,
+.modal-btn-sell
+{
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal-btn-buy{
+    background-color: #0ed02f;
+}
+
+.modal-btn-sell{
+    background-color: #e63946;
+}
+
+.modal-btn-buy:hover {  
+    background-color: #0def33;  
+}
+
+.modal-btn-sell:hover {  
+    background-color: #fc1e31;  
+}
+
+.stock-inputs {  
+    display: flex;  
+    flex-direction: column;  
+    gap: 12px;  
+    margin-bottom: 24px;  
+}
+
+.modal-input {  
+    width: 100%;  
+    background-color: #0d1526;  
+    border: 1px solid #1e2d4a;  
+    border-radius: 8px;  
+    height: 42px;  
+    padding: 0 15px;  
+    color: #ffffff;  
+    font-size: 14px;  
+    font-family: 'Inter', sans-serif;  
+    outline: none;  
+    transition: border-color 0.2s;  
+}
+
+.modal-input:focus {  
+    border-color: #3676f6;  
+}
+
+select.modal-input {  
+    cursor: pointer;  
+    appearance: none;  
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238892a4' d='M6 8L1 3h10z'/%3E%3C/svg%3E");  
+    background-repeat: no-repeat;  
+    background-position: right 15px center;  
+    padding-right: 40px;  
+}
+
+select.modal-input option {  
+    background-color: #111d35;  
+    color: #ffffff;  
+}  
