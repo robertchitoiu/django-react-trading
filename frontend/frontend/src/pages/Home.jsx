@@ -7,7 +7,7 @@ import { getNews } from '../api/externalApi'
 import NewsCard from '../components/NewsCard'
 import toast from 'react-hot-toast'
 import { TOAST_STYLE } from '../constants'
-import '../styles/Loading.css'
+import LoadingComponent from '../components/LoadingComponent'
 
 function Home() {
     const [username, setUsername] = useState('')
@@ -74,10 +74,7 @@ function Home() {
                     </div>
                 </div>
                 {isLoading &&
-                    <div className='loading-container'>
-                        <div className="spinner"></div>
-                        <p className="loading-text">Loading latest news...</p>
-                    </div>
+                    <LoadingComponent />
                 }
                 <div className="news-container">
                     {newsItems}

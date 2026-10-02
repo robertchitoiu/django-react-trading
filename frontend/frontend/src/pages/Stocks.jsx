@@ -5,6 +5,7 @@ import toast from "react-hot-toast"
 import { TOAST_STYLE } from "../constants"
 import '../styles/Stocks.css'
 import { createTransaction } from "../api/transactions"
+import LoadingComponent from "../components/LoadingComponent"
 
 const POPULAR_STOCKS = ['AAPL', 'TSLA', 'GOOGL', 'MSFT', 'NVDA', 'META', 'AMZN', 'BTC-USD']
 
@@ -12,16 +13,22 @@ function Stocks() {
     const [symbol, setSymbol] = useState('')
     const [symbolData, setSymbolData] = useState(null)
     const [searchedSymbol, setSearchedSymbol] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     function handleSubmit(e) {
         e.preventDefault()
+        setIsLoading(true)
         if (!symbol) return
         getStock(symbol)
             .then(data => {
                 setSymbolData(data)
                 setSearchedSymbol(symbol.toUpperCase())
+                setIsLoading(false)
             })
-            .catch((err) => toast.error(err.response.data.error, { style: TOAST_STYLE }))
+            .catch((err) => {
+                toast.error(err.response.data.error, { style: TOAST_STYLE })
+                setIsLoading(false)
+            })
     }
 
     function handlePopularClick(s) {
@@ -78,6 +85,7 @@ function Stocks() {
                             </button>
                         ))}
                     </div>
+                    {isLoading && <LoadingComponent />}
                 </div>
                 {symbolData &&
                     <div className="stocks-content">
