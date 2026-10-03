@@ -26,7 +26,7 @@ function Stocks() {
     useEffect(() => {
         getAccounts()
             .then(data => setAccounts(data.filter(account => account.is_active)))
-                .catch(err => toast.error(err.response.data.error, { style: TOAST_STYLE }))
+            .catch(err => toast.error(err.response.data.error, { style: TOAST_STYLE }))
     }, [])
 
     function handleSubmit(e) {
@@ -40,16 +40,6 @@ function Stocks() {
                 setIsLoading(false)
             })
             .catch((err) => {
-                setSearchedSymbol(symbol.toUpperCase())
-                setSymbolData({  
-                c: 229.87,    // current price  
-                h: 231.45,    // high  
-                l: 228.10,    // low  
-                o: 229.00,    // open  
-                pc: 228.52,   // previous close  
-                d: 1.35,      // change  
-                dp: 0.59      // percent change  
-                })
                 toast.error(err.response.data.error, { style: TOAST_STYLE })
                 setIsLoading(false)
             })
@@ -68,20 +58,20 @@ function Stocks() {
     async function handleBuy() {
         if (!selectedAccount || !quantity) {
             return toast.error('Please fill all fields', { style: TOAST_STYLE })
-        }  
-        try {  
-            await createTransaction(selectedAccount, symbolData.c, quantity, 'buy', searchedSymbol)  
-            toast.success('Successfully bought!', { style: TOAST_STYLE })  
-            setShowModal(false)  
-        } catch (err) {  
-            toast.error(err.response.data.error, { style: TOAST_STYLE })  
-        }  
+        }
+        try {
+            await createTransaction(selectedAccount, symbolData.c, quantity, 'buy', searchedSymbol)
+            toast.success('Successfully bought!', { style: TOAST_STYLE })
+            setShowModal(false)
+        } catch (err) {
+            toast.error(err.response.data.error, { style: TOAST_STYLE })
+        }
     }
 
     async function handleSell() {
         if (!selectedAccount || !quantity) {
             return toast.error('Please fill all fields', { style: TOAST_STYLE })
-        } 
+        }
         try {
             await createTransaction(selectedAccount, symbolData.c, quantity, 'sell', symbol)
             toast.success('Successfully sold!', { style: TOAST_STYLE })
@@ -90,7 +80,7 @@ function Stocks() {
         }
     }
 
-    function openModal(action){
+    function openModal(action) {
         setShowModal(true)
         setAction(action)
     }
@@ -98,16 +88,16 @@ function Stocks() {
     return (
         <>
             <Navbar />
-            <Modal 
+            <Modal
                 isOpen={showModal}
                 onRequestClose={() => setShowModal(false)}
                 style={MODAL_STYLE}
             >
-                <h3 className='modal-header'>  
-                    {action} {symbol}  
-                </h3>  
-                <p className='modal-subheader'>  
-                    Select how much of {symbol} you want to {action.toLowerCase()} and in which account:  
+                <h3 className='modal-header'>
+                    {action} {symbol}
+                </h3>
+                <p className='modal-subheader'>
+                    Select how much of {symbol} you want to {action.toLowerCase()} and in which account:
                 </p>
                 <div className="stock-inputs">
                     <input
@@ -117,26 +107,26 @@ function Stocks() {
                         value={quantity}
                         onChange={e => setQuantity(e.target.value)}
                     />
-                    <select  
-                        className="modal-input"  
-                        value={selectedAccount}  
-                        onChange={e => setSelectedAccount(e.target.value)}  
-                    >  
-                        <option value="">Select account</option>  
-                        {accounts.map(account => (  
-                            <option key={account.id} value={account.id}>  
-                                {account.name} — {account.balance} {account.currency}  
-                            </option>  
-                        ))}  
-                    </select>  
-                </div>  
-                <div className='modal-actions'>  
-                    <button className="modal-btn-cancel" onClick={() => setShowModal(false)}>  
-                        Cancel  
-                    </button>  
-                    <button className={action === 'Buy' ? "modal-btn-buy" : "modal-btn-sell"} onClick={action === 'Buy' ? handleBuy : handleSell}>  
-                        {action}  
-                    </button>  
+                    <select
+                        className="modal-input"
+                        value={selectedAccount}
+                        onChange={e => setSelectedAccount(e.target.value)}
+                    >
+                        <option value="">Select account</option>
+                        {accounts.map(account => (
+                            <option key={account.id} value={account.id}>
+                                {account.name} — {account.balance} {account.currency}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className='modal-actions'>
+                    <button className="modal-btn-cancel" onClick={() => setShowModal(false)}>
+                        Cancel
+                    </button>
+                    <button className={action === 'Buy' ? "modal-btn-buy" : "modal-btn-sell"} onClick={action === 'Buy' ? handleBuy : handleSell}>
+                        {action}
+                    </button>
                 </div>
             </Modal>
             <div className="stocks-page">
