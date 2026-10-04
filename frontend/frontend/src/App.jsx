@@ -15,7 +15,8 @@ import NotFound from './pages/NotFound'
 import { Toaster } from 'react-hot-toast'
 import Stocks from './pages/Stocks'
 import Watchlist from './pages/Watchlist'
-import Modal from 'react-modal' 
+import Modal from 'react-modal'
+import Portfolio from './pages/Portfolio'
 
 function Logout() {
   localStorage.removeItem(ACCESS_TOKEN)
@@ -37,48 +38,53 @@ function App() {
             <ProtectedRoute>
               <Home />
             </ProtectedRoute>
-          }/>
+          } />
           <Route path='/logout' element={
-          <ProtectedRoute>
-            <Logout />
-          </ProtectedRoute>
-          }/>
+            <ProtectedRoute>
+              <Logout />
+            </ProtectedRoute>
+          } />
           <Route path='/accounts' element={
             <ProtectedRoute>
               <Accounts />
             </ProtectedRoute>
-          }/>
-          <Route path='/editAccount/:id' element={  
-            <ProtectedRoute>  
-                <EditAccount />  
-            </ProtectedRoute>  
-          }/>  
+          } />
+          <Route path='/editAccount/:id' element={
+            <ProtectedRoute>
+              <EditAccount />
+            </ProtectedRoute>
+          } />
           <Route path='/createAccount' element={
             <ProtectedRoute>
               <CreateAccount />
             </ProtectedRoute>
-          }/>
+          } />
           <Route path='/transactions/:id/:name' element={
             <ProtectedRoute>
-                <Transactions />
+              <Transactions />
             </ProtectedRoute>
-          }/>
+          } />
           <Route path='/myaccount' element={
             <ProtectedRoute>
               <MyAccount />
             </ProtectedRoute>
-          }/>
+          } />
           <Route path='/stocks' element={
             <ProtectedRoute>
               <Stocks />
             </ProtectedRoute>
-          }/>
+          } />
           <Route path='/watchlist' element={
             <ProtectedRoute>
               <Watchlist />
             </ProtectedRoute>
-          }/>
-          <Route path='*' element={<NotFound />}/>
+          } />
+          <Route path='/portfolio' element={
+            <ProtectedRoute>
+              <Portfolio />
+            </ProtectedRoute>
+          } />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

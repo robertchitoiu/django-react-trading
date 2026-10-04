@@ -2,23 +2,24 @@ import logo from '../assets/logo.png'
 import { Link } from 'react-router-dom'
 import '../styles/Navbar.css'
 
-function Navbar() { 
-   return (
-    <nav className="navbar">
-        <div className="navbar-left">
-            <Link to='/'>
-                <img src={logo} alt="logo"></img>
-            </Link>
-            <Link className='nav-link' to='/accounts'>Accounts</Link>
-            <Link className='nav-link' to='/stocks'>Stocks</Link>
-            <Link className='nav-link' to='/watchlist'>Watchlist</Link>
-        </div>
-        <div className="navbar-right">
-            <Link className='nav-link' to='/myAccount'>My Account</Link>
-            <Link className='nav-logout'to='/logout'>Logout</Link>
-        </div>
-    </nav> 
-   )
+function Navbar() {
+    return (
+        <nav className="navbar">
+            <div className="navbar-left">
+                <Link to='/'>
+                    <img src={logo} alt="logo"></img>
+                </Link>
+                <Link className='nav-link' to='/accounts'>Accounts</Link>
+                <Link className='nav-link' to='/stocks'>Stocks</Link>
+                <Link className='nav-link' to='/watchlist'>Watchlist</Link>
+                <Link className='nav-link' to='/portfolio'>Portfolio</Link>
+            </div>
+            <div className="navbar-right">
+                <Link className='nav-link' to='/myAccount'>My Account</Link>
+                <Link className='nav-logout' to='/logout'>Logout</Link>
+            </div>
+        </nav>
+    )
 }
 
 export default Navbar

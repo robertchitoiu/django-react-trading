@@ -4,6 +4,7 @@ import { useState } from "react";
 import { jwtDecode } from 'jwt-decode'
 import { useEffect } from "react";
 import api from "../api/axios";
+import LoadingComponent from "./LoadingComponent";
 
 
 function ProtectedRoute({ children }) {
@@ -50,7 +51,7 @@ function ProtectedRoute({ children }) {
     }
 
     if (isAuthorized === null) {
-        return <div>Loading...</div>
+        return <LoadingComponent />
     }
 
     return isAuthorized ? children : <Navigate to='/login' />
