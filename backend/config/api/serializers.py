@@ -43,6 +43,8 @@ class WatchlistItemSerializer(serializers.ModelSerializer):
         extra_kwargs = {'id': {'read_only': True}}
 
 class PortfolioItemSerializer(serializers.ModelSerializer):
+    account_name = serializers.CharField(source='account.name')
+
     class Meta:
         model = PortfolioItem
-        fields = ['id', 'account', 'symbol', 'quantity']
+        fields = ['id', 'account', 'account_name', 'symbol', 'quantity']

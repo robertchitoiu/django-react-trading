@@ -207,7 +207,10 @@ def get_stock(request, symbol):
 
 @api_view(['GET'])
 def get_portfolio(request):
-    portfolio_items = PortfolioItem.objects.filter(account__user=request.user)
-    serializer = PortfolioItemSerializer(portfolio_items, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    try:
+        portfolio_items = PortfolioItem.objects.filter(account__user=request.user, account__is_active=True)
+        serializer = PortfolioItemSerializer(portfolio_items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except:
+        return Response({'error': 'Could not load portfolio'}, status=status.HTTP_400_BAD_REQUEST)
 
