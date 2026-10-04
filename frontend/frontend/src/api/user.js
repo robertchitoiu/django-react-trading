@@ -4,18 +4,18 @@ export async function getUser() {
     try {
         const response = await api.get('api/user/me/')
         return response.data
-    } catch(err) {
-        throw(err)
+    } catch (err) {
+        throw (err)
     }
-    
+
 }
 
 export async function getDashboard() {
     try {
         const response = await api.get('api/dashboard/')
         return response.data
-    } catch(err) {
-        throw(err)
+    } catch (err) {
+        throw (err)
     }
 }
 
@@ -23,7 +23,16 @@ export async function getChartData() {
     try {
         const response = await api.get('api/user/me/chart/')
         return response.data
-    } catch(err) {
-        throw(err)
+    } catch (err) {
+        throw (err)
+    }
+}
+
+export async function getPortfolio() {
+    try {
+        const response = await api.get('api/portfolio/')
+        return response.data
+    } catch (err) {
+        throw (err)
     }
 }
