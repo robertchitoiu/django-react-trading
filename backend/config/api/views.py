@@ -240,7 +240,7 @@ def watchlist(request):
 @api_view(['DELETE'])
 def delete_watchlist(request, id):
     try:
-        item = WatchlistItem.get()
+        item = WatchlistItem.objects.get(id=id)
     except WatchlistItem.DoesNotExist:
         return Response({'error': 'Stock does not exist'}, status=status.HTTP_404_NOT_FOUND)
     if item.user != request.user:
