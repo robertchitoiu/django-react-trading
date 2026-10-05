@@ -12,4 +12,6 @@ urlpatterns = [
     path('user/me/chart/', views.balance_chart, name='chart'),
     path('stocks/<str:symbol>/', views.get_stock, name='get_stocks'),
     path('portfolio/', views.get_portfolio, name='get_portfolio'),
+    path('watchlist/', views.watchlist, name='watchlist'),
+    path('watchlist/<int:id>/', views.delete_watchlist, name='delete_watchlist'),
 ]
