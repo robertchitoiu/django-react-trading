@@ -244,6 +244,6 @@ def delete_watchlist(request, id):
     except WatchlistItem.DoesNotExist:
         return Response({'error': 'Stock does not exist'}, status=status.HTTP_404_NOT_FOUND)
     if item.user != request.user:
-        return Response({'error': 'Access forbidden'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'error': 'Access forbidden'}, status=status.HTTP_403_FORBIDDEN)
     item.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
