@@ -1,0 +1,112 @@
+.watchlist-page {  
+    background-color: #0a0f1e;  
+    min-height: calc(100vh - 64px);  
+    padding: 40px 48px;  
+}
+
+.watchlist-page .header-container {  
+    margin-bottom: 32px;  
+}
+
+.watchlist-page .header-title {  
+    color: #ffffff;  
+    font-size: 28px;  
+    font-weight: 700;  
+    letter-spacing: -0.5px;  
+}
+
+.watchlist-page .header-subtitle {  
+    color: #8892a4;  
+    font-size: 14px;  
+    margin-top: 4px;  
+}
+
+.watchlist-list {  
+    display: flex;  
+    flex-direction: column;  
+    gap: 8px;  
+    max-width: 700px;  
+}
+
+.watchlist-card {  
+    display: flex;  
+    align-items: center;  
+    gap: 16px;  
+    background-color: #111d35;  
+    border: 1px solid #1e2d4a;  
+    border-radius: 10px;  
+    padding: 16px 20px;  
+    transition: border-color 0.2s;  
+}
+
+.watchlist-card:hover {  
+    border-color: #3676f6;  
+}
+
+.watchlist-symbol {  
+    color: #ffffff;  
+    font-size: 15px;  
+    font-weight: 700;  
+    width: 80px;  
+}
+
+.watchlist-price {  
+    color: #ffffff;  
+    font-size: 15px;  
+    font-weight: 600;  
+    flex: 1;  
+}
+
+.watchlist-change {  
+    font-size: 13px;  
+    font-weight: 600;  
+    padding: 3px 10px;  
+    border-radius: 20px;  
+    min-width: 80px;  
+    text-align: center;  
+}
+
+.watchlist-change.positive {  
+    color: #00c087;  
+    background-color: rgba(0, 192, 135, 0.1);  
+    border: 1px solid rgba(0, 192, 135, 0.2);  
+}
+
+.watchlist-change.negative {  
+    color: #ff4757;  
+    background-color: rgba(255, 71, 87, 0.1);  
+    border: 1px solid rgba(255, 71, 87, 0.2);  
+}
+
+.watchlist-remove {  
+    background-color: transparent;  
+    color: #8892a4;  
+    border: 1px solid #1e2d4a;  
+    width: 60px;  
+    height: 32px;  
+    border-radius: 6px;  
+    cursor: pointer;  
+    font-size: 12px;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    transition: all 0.2s;  
+    font-family: 'Inter', sans-serif;  
+}
+
+.watchlist-remove:hover {  
+    color: #ff4757;  
+    border-color: #ff4757;  
+    background-color: rgba(255, 71, 87, 0.05);  
+}
+
+.watchlist-page .empty-state {  
+    display: flex;  
+    flex-direction: column;  
+    align-items: center;  
+    justify-content: center;  
+    gap: 8px;  
+    padding: 80px 0;  
+    color: #8892a4;  
+    font-size: 15px;  
+}  

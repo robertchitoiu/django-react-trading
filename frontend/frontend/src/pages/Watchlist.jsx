@@ -5,6 +5,7 @@ import { TOAST_STYLE, MODAL_STYLE } from "../constants.js"
 import Navbar from "../components/Navbar.jsx"
 import LoadingComponent from "../components/LoadingComponent.jsx"
 import Modal from 'react-modal'
+import '../styles/Watchlist.css'
 
 function Watchlist() {
     const [watchlist, setWatchlist] = useState([])
