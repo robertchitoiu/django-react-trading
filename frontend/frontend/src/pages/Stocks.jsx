@@ -35,9 +35,9 @@ function Stocks() {
         if (!symbol) return
         getStock(symbol)
             .then(data => {
-                setSymbolData(data)
-                setSearchedSymbol(symbol.toUpperCase())
                 setIsLoading(false)
+                setSymbolData(data)
+                setSearchedSymbol(symbol.toUpperCase())                
             })
             .catch((err) => {
                 toast.error(err.response.data.error, { style: TOAST_STYLE })
@@ -151,46 +151,49 @@ function Stocks() {
                             </button>
                         ))}
                     </div>
-                    {isLoading && <LoadingComponent />}
                 </div>
-                {symbolData &&
-                    <div className="stocks-content">
-                        <div className="stock-result">
-                            <div className="stock-header">
-                                <h2 className="stock-symbol">{searchedSymbol}</h2>
-                                <span className={`stock-change ${symbolData.d >= 0 ? 'positive' : 'negative'}`}>
-                                    {symbolData.d >= 0 ? '+' : ''}{symbolData.d?.toFixed(2)} ({symbolData.dp?.toFixed(2)}%)
-                                </span>
-                            </div>
-                            <div className="stock-price">
-                                <span className="current-price">${symbolData.c?.toFixed(2)}</span>
-                                <span className="price-label">Current Price</span>
-                            </div>
-                            <div className="stock-stats">
-                                <div className="stat-item">
-                                    <span className="stat-label">Open</span>
-                                    <span className="stat-value">${symbolData.o?.toFixed(2)}</span>
+                {isLoading ? (
+                        <LoadingComponent />
+                    ) : (
+                        symbolData &&
+                            <div className="stocks-content">
+                                <div className="stock-result">
+                                    <div className="stock-header">
+                                        <h2 className="stock-symbol">{searchedSymbol}</h2>
+                                        <span className={`stock-change ${symbolData.d >= 0 ? 'positive' : 'negative'}`}>
+                                            {symbolData.d >= 0 ? '+' : ''}{symbolData.d?.toFixed(2)} ({symbolData.dp?.toFixed(2)}%)
+                                        </span>
+                                    </div>
+                                    <div className="stock-price">
+                                        <span className="current-price">${symbolData.c?.toFixed(2)}</span>
+                                        <span className="price-label">Current Price</span>
+                                    </div>
+                                    <div className="stock-stats">
+                                        <div className="stat-item">
+                                            <span className="stat-label">Open</span>
+                                            <span className="stat-value">${symbolData.o?.toFixed(2)}</span>
+                                        </div>
+                                        <div className="stat-item">
+                                            <span className="stat-label">Previous Close</span>
+                                            <span className="stat-value">${symbolData.pc?.toFixed(2)}</span>
+                                        </div>
+                                        <div className="stat-item">
+                                            <span className="stat-label">High</span>
+                                            <span className="stat-value high">${symbolData.h?.toFixed(2)}</span>
+                                        </div>
+                                        <div className="stat-item">
+                                            <span className="stat-label">Low</span>
+                                            <span className="stat-value low">${symbolData.l?.toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                    <div className="stock-actions">
+                                        <button onClick={() => openModal('Buy')} className="btn-buy">Buy</button>
+                                        <button onClick={() => openModal('Sell')} className="btn-sell">Sell</button>
+                                        <button className="btn-watchlist">+ Watchlist</button>
+                                    </div>
                                 </div>
-                                <div className="stat-item">
-                                    <span className="stat-label">Previous Close</span>
-                                    <span className="stat-value">${symbolData.pc?.toFixed(2)}</span>
-                                </div>
-                                <div className="stat-item">
-                                    <span className="stat-label">High</span>
-                                    <span className="stat-value high">${symbolData.h?.toFixed(2)}</span>
-                                </div>
-                                <div className="stat-item">
-                                    <span className="stat-label">Low</span>
-                                    <span className="stat-value low">${symbolData.l?.toFixed(2)}</span>
-                                </div>
                             </div>
-                            <div className="stock-actions">
-                                <button onClick={() => openModal('Buy')} className="btn-buy">Buy</button>
-                                <button onClick={() => openModal('Sell')} className="btn-sell">Sell</button>
-                                <button className="btn-watchlist">+ Watchlist</button>
-                            </div>
-                        </div>
-                    </div>
+                    )
                 }
             </div>
         </>
