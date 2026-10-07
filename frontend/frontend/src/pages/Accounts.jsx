@@ -25,13 +25,17 @@ function Accounts() {
         setAccountToDelete(id)
     }
 
-    function confirmDelete() {
-        deleteAccount(accountToDelete).catch(err => toast.error(err.response.data.error, { style: TOAST_STYLE }))
-        setAccounts(prevAcounts => prevAcounts.map(account => {
-            return account.id === accountToDelete ? { ...account, is_active: false } : account
-        }))
-        setShowModal(false)
-        toast.success('Successfully deleted', { style: TOAST_STYLE })
+    async function confirmDelete() {
+        try {
+            await deleteAccount(accountToDelete)
+            setAccounts(prevAcounts => prevAcounts.map(account => {
+                return account.id === accountToDelete ? { ...account, is_active: false } : account
+            }))
+            setShowModal(false)
+            toast.success('Successfully deleted', { style: TOAST_STYLE })
+        } catch(err) {
+             toast.error('Failed to delete', { style: TOAST_STYLE })
+        }
     }
 
     const accountsItems = accounts.map(account => {

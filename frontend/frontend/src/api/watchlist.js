@@ -1,6 +1,6 @@
 import api from "./axios"
 
-async function getWatchlist() {
+export async function getWatchlist() {
     try {
         const response = await api.get('api/watchlist/')
         return response.data
@@ -9,7 +9,7 @@ async function getWatchlist() {
     }
 }
 
-async function createWatchlistItem(symbol) {
+export async function createWatchlistItem(symbol) {
     try {
         await api.post('api/watchlist/', symbol)
     } catch(err) {
@@ -17,7 +17,7 @@ async function createWatchlistItem(symbol) {
     }
 }
 
-async function removeWatchlistItem(id) {
+export async function removeWatchlistItem(id) {
     try {
         await api.delete(`api/watchlist/${id}`)
     } catch(err) {
