@@ -9,6 +9,7 @@ import LoadingComponent from "../components/LoadingComponent"
 import Modal from 'react-modal'
 import { MODAL_STYLE } from "../constants"
 import { getAccounts } from "../api/account"
+import { createWatchlistItem } from "../api/watchlist"
 
 const POPULAR_STOCKS = ['AAPL', 'TSLA', 'GOOGL', 'MSFT', 'NVDA', 'META', 'AMZN', 'BTC-USD']
 
@@ -37,7 +38,7 @@ function Stocks() {
             .then(data => {
                 setIsLoading(false)
                 setSymbolData(data)
-                setSearchedSymbol(symbol.toUpperCase())                
+                setSearchedSymbol(symbol.toUpperCase())
             })
             .catch((err) => {
                 toast.error(err.response.data.error, { style: TOAST_STYLE })
@@ -75,6 +76,15 @@ function Stocks() {
         try {
             await createTransaction(selectedAccount, symbolData.c, quantity, 'sell', symbol)
             toast.success('Successfully sold!', { style: TOAST_STYLE })
+        } catch (err) {
+            toast.error(err.response.data.error, { style: TOAST_STYLE })
+        }
+    }
+
+    async function handleAdd() {
+        try {
+            await createWatchlistItem(symbol)
+            toast.success('Successfully added', { style: TOAST_STYLE })
         } catch (err) {
             toast.error(err.response.data.error, { style: TOAST_STYLE })
         }
@@ -153,47 +163,47 @@ function Stocks() {
                     </div>
                 </div>
                 {isLoading ? (
-                        <LoadingComponent />
-                    ) : (
-                        symbolData &&
-                            <div className="stocks-content">
-                                <div className="stock-result">
-                                    <div className="stock-header">
-                                        <h2 className="stock-symbol">{searchedSymbol}</h2>
-                                        <span className={`stock-change ${symbolData.d >= 0 ? 'positive' : 'negative'}`}>
-                                            {symbolData.d >= 0 ? '+' : ''}{symbolData.d?.toFixed(2)} ({symbolData.dp?.toFixed(2)}%)
-                                        </span>
-                                    </div>
-                                    <div className="stock-price">
-                                        <span className="current-price">${symbolData.c?.toFixed(2)}</span>
-                                        <span className="price-label">Current Price</span>
-                                    </div>
-                                    <div className="stock-stats">
-                                        <div className="stat-item">
-                                            <span className="stat-label">Open</span>
-                                            <span className="stat-value">${symbolData.o?.toFixed(2)}</span>
-                                        </div>
-                                        <div className="stat-item">
-                                            <span className="stat-label">Previous Close</span>
-                                            <span className="stat-value">${symbolData.pc?.toFixed(2)}</span>
-                                        </div>
-                                        <div className="stat-item">
-                                            <span className="stat-label">High</span>
-                                            <span className="stat-value high">${symbolData.h?.toFixed(2)}</span>
-                                        </div>
-                                        <div className="stat-item">
-                                            <span className="stat-label">Low</span>
-                                            <span className="stat-value low">${symbolData.l?.toFixed(2)}</span>
-                                        </div>
-                                    </div>
-                                    <div className="stock-actions">
-                                        <button onClick={() => openModal('Buy')} className="btn-buy">Buy</button>
-                                        <button onClick={() => openModal('Sell')} className="btn-sell">Sell</button>
-                                        <button className="btn-watchlist">+ Watchlist</button>
-                                    </div>
+                    <LoadingComponent />
+                ) : (
+                    symbolData &&
+                    <div className="stocks-content">
+                        <div className="stock-result">
+                            <div className="stock-header">
+                                <h2 className="stock-symbol">{searchedSymbol}</h2>
+                                <span className={`stock-change ${symbolData.d >= 0 ? 'positive' : 'negative'}`}>
+                                    {symbolData.d >= 0 ? '+' : ''}{symbolData.d?.toFixed(2)} ({symbolData.dp?.toFixed(2)}%)
+                                </span>
+                            </div>
+                            <div className="stock-price">
+                                <span className="current-price">${symbolData.c?.toFixed(2)}</span>
+                                <span className="price-label">Current Price</span>
+                            </div>
+                            <div className="stock-stats">
+                                <div className="stat-item">
+                                    <span className="stat-label">Open</span>
+                                    <span className="stat-value">${symbolData.o?.toFixed(2)}</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-label">Previous Close</span>
+                                    <span className="stat-value">${symbolData.pc?.toFixed(2)}</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-label">High</span>
+                                    <span className="stat-value high">${symbolData.h?.toFixed(2)}</span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-label">Low</span>
+                                    <span className="stat-value low">${symbolData.l?.toFixed(2)}</span>
                                 </div>
                             </div>
-                    )
+                            <div className="stock-actions">
+                                <button onClick={() => openModal('Buy')} className="btn-buy">Buy</button>
+                                <button onClick={() => openModal('Sell')} className="btn-sell">Sell</button>
+                                <button onClick={handleAdd} className="btn-watchlist">Add to watchlist</button>
+                            </div>
+                        </div>
+                    </div>
+                )
                 }
             </div>
         </>
