@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny
 from django.db.models import Sum  
 import requests
 import os
-from django.db import transaction
+from django.db import transaction, IntegrityError
 from concurrent.futures import ThreadPoolExecutor
 
 @api_view(['POST'])
@@ -219,23 +219,25 @@ def get_portfolio(request):
 def watchlist(request):
     if request.method == 'GET':
         api_key = os.environ.get('FINNHUB_API_KEY')
-        def fetch_price(symbol):
-            url = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={api_key}'
+        def fetch_price(item):
+            url = f'https://finnhub.io/api/v1/quote?symbol={item.symbol}&token={api_key}'
             response = requests.get(url)
             if response.status_code != 200:
-                return {'symbol': symbol, 'price': None, 'error': True}
-            return {'symbol': symbol, 'price': response.json().get('c')}
+                return { 'symbol': item.symbol, 'price': None, 'error': True}
+            return {'id': item.id, 'symbol': item.symbol, 'price': response.json().get('c')}
         watchlistItems = WatchlistItem.objects.filter(user=request.user)
-        symbols = [item.symbol for item in watchlistItems]
         with ThreadPoolExecutor() as executor:
-            results = list(executor.map(fetch_price, symbols))
+            results = list(executor.map(fetch_price, watchlistItems))
             return Response(results, status=status.HTTP_200_OK)
     elif request.method == 'POST':
         serializer = WatchlistItemSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response({'error': 'Stock already in watchlist'}, status=status.HTTP_400_BAD_REQUEST)
+            try:
+                serializer.save(user=request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except IntegrityError:
+                return Response({'error': 'Stock already in watchlist'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
 def delete_watchlist(request, id):
